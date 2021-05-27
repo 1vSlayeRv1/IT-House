@@ -30,3 +30,13 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=500, null=False, blank=False, verbose_name='комментарий')
+    date = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='дата создания')
+    profile_id = ForeignKey('Profile', on_delete= models.CASCADE, null=False, blank=False)
+    post_id = ForeignKey('Post', on_delete=models.CASCADE, null=False, blank=True)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
