@@ -1,11 +1,6 @@
 from django.contrib import admin
-from .models import Post, Profile, Comment, Role, FieldOfInterest
+from .models import Post,  Comment
 
-
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'firstname', 'lastname', 'age', 'date_reg')
-    list_display_links = ('user', 'firstname', 'date_reg')
-    search_fields = ('user', 'firstname')
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -21,7 +16,4 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
-admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Role)
-admin.site.register(FieldOfInterest)

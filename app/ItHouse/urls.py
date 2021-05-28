@@ -19,7 +19,8 @@ from django.urls import path, include
 extra_patterns = [
     path('posts/', include('posts.urls')),
     path('support/', include('support.urls')),
-    path('events/', include('events.urls'))
+    path('events/', include('events.urls')),
+    path('', include('profiles.urls'))
 ]
 
 urlpatterns = [

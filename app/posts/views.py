@@ -1,8 +1,6 @@
-import json
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.core import serializers
-from .models import Profile, Post, Comment
+from django.http import JsonResponse
+
+from .models import Post, Comment
 
 
 def print_posts(request):

@@ -1,5 +1,5 @@
 from django.db import models
-from posts.models import Profile
+from profiles.models import Profile
 
 
 class MessageToSupport(models.Model):
