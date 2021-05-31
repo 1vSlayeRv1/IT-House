@@ -3,7 +3,6 @@ from django.db.models.fields.related import ForeignKey
 from profiles.models import Profile
 
 
-
 class Post(models.Model):
     title = models.CharField(
         max_length=100, null=False, blank=False,
@@ -28,7 +27,8 @@ class Comment(models.Model):
         auto_now_add=True, db_index=True, verbose_name='дата создания')
     profile = ForeignKey(
         Profile, on_delete=models.CASCADE, null=False, blank=False)
-    post = ForeignKey('Post', related_name='comments', on_delete=models.CASCADE, null=False, blank=True)
+    post = ForeignKey('Post', related_name='comments',
+                      on_delete=models.CASCADE, null=False, blank=True)
 
     class Meta:
         verbose_name = 'Комментарий'

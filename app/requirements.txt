@@ -29,3 +29,4 @@ django
 djangorestframework
 django-cors-headers
 pyjwt
+djangorestframework-jwt

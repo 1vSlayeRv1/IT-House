@@ -1,7 +1,9 @@
 from django.db import models
+import jwt
 from django.contrib.auth.models import User
 from events.models import Event
-
+from django.conf import settings
+from datetime import datetime, timedelta
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=15, null=True,
@@ -15,6 +17,37 @@ class Profile(models.Model):
     event = models.ForeignKey(
         Event, null=True, blank=True, on_delete=models.CASCADE)
     role = models.ForeignKey('Role', null=True, blank=True, on_delete=models.CASCADE)
+
+    @property
+    def token(self):
+        """
+        Позволяет получить токен пользователя путем вызова user.token, вместо
+        user._generate_jwt_token(). Декоратор @property выше делает это
+        возможным. token называется "динамическим свойством".
+        """
+        return self._generate_jwt_token()
+
+    def get_full_name(self):
+        """
+        Этот метод требуется Django для таких вещей, как обработка электронной
+        почты. Обычно это имя фамилия пользователя, но поскольку мы не
+        используем их, будем возвращать username.
+        """
+        return self.username
+
+    def _generate_jwt_token(self):
+        """
+        Генерирует веб-токен JSON, в котором хранится идентификатор этого
+        пользователя, срок действия токена составляет 1 день от создания
+        """
+        dt = datetime.now() + timedelta(days=1)
+
+        token = jwt.encode({
+            'id': self.pk,
+            'exp': int(dt.strftime('%s'))
+        }, settings.SECRET_KEY, algorithm='HS256')
+
+        return token.decode('utf-8')
 
     class Meta:
         verbose_name = 'Профиль'

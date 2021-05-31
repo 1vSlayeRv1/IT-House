@@ -20,7 +20,7 @@ extra_patterns = [
     path('posts/', include('posts.urls')),
     path('support/', include('support.urls')),
     path('events/', include('events.urls')),
-    path('', include('profiles.urls'))
+    path('auth/', include('profiles.urls'))
 ]
 
 urlpatterns = [
