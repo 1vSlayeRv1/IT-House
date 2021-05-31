@@ -28,7 +28,7 @@ class Comment(models.Model):
         auto_now_add=True, db_index=True, verbose_name='дата создания')
     profile = ForeignKey(
         Profile, on_delete=models.CASCADE, null=False, blank=False)
-    post = ForeignKey('Post', on_delete=models.CASCADE, null=False, blank=True)
+    post = ForeignKey('Post', related_name='comments', on_delete=models.CASCADE, null=False, blank=True)
 
     class Meta:
         verbose_name = 'Комментарий'

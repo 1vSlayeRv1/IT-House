@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import print_posts, open_post
+from .views import ListPosts, ListDetailPosts
 urlpatterns = [
-    path('<int:post_id>', open_post, name='open_post'),
-    path('', print_posts, name='print_posts')
+    path('<int:pk>', ListDetailPosts.as_view(), name='open_post'),
+    path('', ListPosts.as_view(), name='print_posts')
 ]
