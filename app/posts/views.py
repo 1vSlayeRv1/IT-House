@@ -35,19 +35,27 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        request.data['profile'] = request.user.pk
         serializer = CommentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
     def put(self, request):
-        comment = Comment.objects.filter(pk=request.data['id']).first()
-        serializer = CommentSerializer(comment, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        request.data['profile'] = request.user.pk
+        comment = Comment.objects.filter(pk=request.data['id']).filter(profile=request.user.pk).first()
+        if comment:
+            serializer = CommentSerializer(comment, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        comment = Comment.objects.get(pk=request.data['id'])
-        comment.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        comment = Comment.objects.filter(pk=request.data['id']).filter(profile=request.user.pk)
+        if comment.exists():
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

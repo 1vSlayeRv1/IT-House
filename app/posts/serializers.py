@@ -28,6 +28,8 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.comment = validate_data['comment']
         instance.save()
         return instance
+
+
 class PostWithCommentsSerializer(serializers.ModelSerializer):
 
     comments = CommentSerializer(many=True, read_only=True)
