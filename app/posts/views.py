@@ -4,8 +4,9 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, g
 from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from django.http.response import JsonResponse
 from .models import Post, Comment
-
+import json
 from django.contrib.auth import get_user_model
 from .serializers import CommentSerializer, PostSerializer, PostWithCommentsSerializer
 User = get_user_model()
@@ -26,8 +27,6 @@ class ListDetailPosts(ListAPIView):
         post_id = self.kwargs['pk']
         queryset = self.model.objects.filter(id=post_id)
         return queryset
-
-
 class CreateUpdateDestroyComments(mixins.CreateModelMixin,
                                   mixins.UpdateModelMixin,
                                   mixins.DestroyModelMixin,

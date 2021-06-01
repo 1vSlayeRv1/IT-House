@@ -30,3 +30,4 @@ djangorestframework
 django-cors-headers
 pyjwt
 djangorestframework-jwt
+easy-thumbnails

@@ -30,6 +30,15 @@ ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = 'profiles.Profile'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+STATIC_ROOT = os.path.join(BASE_DIR, "ItHouse", "static")
+STATIC_URL = "/static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
+
+
 # Application definition
 
 REST_FRAMEWORK = {
@@ -63,9 +72,21 @@ INSTALLED_APPS = [
     'events.apps.EventsConfig',
     'support.apps.SupportConfig',
     'profiles.apps.ProfilesConfig',
+    'images.apps.ImagesConfig',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'easy_thumbnails'
 ]
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'default': {
+            'size': (96,96),
+            'crop': 'scale',
+        },
+    },
+}
+THUMBNAIL_BASEDIR = 'thumbnails'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -41,6 +41,10 @@ class UserManager(BaseUserManager):
 class Profile(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
     email = models.EmailField(db_index=True, unique=True)
+    firstname = models.CharField(max_length=100, null=True, blank=True,
+    verbose_name='Имя')
+    lastname = models.CharField(max_length=100, null=True, blank=True,
+    verbose_name='Фамилия')
     phone = models.CharField(max_length=15, null=True,
                              blank=True, verbose_name='телефон')
     age = models.SmallIntegerField(
@@ -75,6 +79,9 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     # Сообщает Django, что определенный выше класс UserManager
     # должен управлять объектами этого типа.
     objects = UserManager()
+    def get_id(self):
+        return self.pk
+
     class Meta:
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'

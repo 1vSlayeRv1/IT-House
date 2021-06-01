@@ -1,10 +1,11 @@
 from datetime import datetime
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ViewDoesNotExist
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CurrentUserDefault
 from .models import Post, Comment
-
+from images.models import Image
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -29,10 +30,15 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class CommentImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'comment', 'date', 'profile', 'post')
 
+ 
 class PostWithCommentsSerializer(serializers.ModelSerializer):
 
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = CommentImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
