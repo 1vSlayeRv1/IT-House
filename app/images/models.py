@@ -13,7 +13,8 @@ class Image(models.Model):
     post = models.ManyToManyField(Post, blank=True, related_name='post_image')
     support = models.ManyToManyField(MessageToSupport, blank=True, related_name='support_image')
 
-
+    def __str__(self):
+        return self.file.url
     class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'

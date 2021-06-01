@@ -1,11 +1,14 @@
 from datetime import datetime
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ViewDoesNotExist
+from django.db.models.fields import CharField
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import CurrentUserDefault
+from rest_framework.relations import StringRelatedField
 from .models import Post, Comment
 from images.models import Image
+from profiles.models import Profile
 class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -30,12 +33,23 @@ class CommentSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class ImageFileSerializer(serializers.ModelSerializer):
+    file = serializers.StringRelatedField(source='file.url', read_only=True)
+    class Meta:
+        model = Image
+        fields = ('file', )
+class ProfileImageSerializer(serializers.ModelSerializer):
+    profile_image = ImageFileSerializer(read_only=True, many=True)
+    class Meta:
+        model = Profile
+        fields = ('id', 'profile_image')
 class CommentImageSerializer(serializers.ModelSerializer):
+    profile = ProfileImageSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = ('id', 'comment', 'date', 'profile', 'post')
 
- 
+
 class PostWithCommentsSerializer(serializers.ModelSerializer):
 
     comments = CommentImageSerializer(many=True, read_only=True)
