@@ -27,6 +27,10 @@ class ListDetailPosts(ListAPIView):
         post_id = self.kwargs['pk']
         queryset = self.model.objects.filter(id=post_id)
         return queryset
+    def list(self, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = PostWithCommentsSerializer(queryset, many=True)
+        return Response(serializer.data[0])
 class CreateUpdateDestroyComments(mixins.CreateModelMixin,
                                   mixins.UpdateModelMixin,
                                   mixins.DestroyModelMixin,
