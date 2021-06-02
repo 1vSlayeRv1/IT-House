@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from rest_framework.generics import ListAPIView
 from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -40,10 +41,11 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
     def post(self, request):
         request.data['profile'] = request.user.pk
         serializer = CommentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
         request.data['profile'] = request.user.pk
         comment = Comment.objects.filter(
@@ -51,9 +53,11 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
             profile=request.user.pk).first()
         if comment:
             serializer = CommentSerializer(comment, data=request.data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            return Response(serializer.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                raise ValidationError('Comment Error')
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 

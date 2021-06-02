@@ -19,7 +19,8 @@ class Image(models.Model):
 
         if self.file:
             resize_logo(self)
-
+    def __str__(self):
+        return self.file.url
     class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
