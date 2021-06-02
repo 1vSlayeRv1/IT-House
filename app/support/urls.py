@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import support_to_message
+from .views import CreateMessageAPI
 
 urlpatterns = [
-    path('', support_to_message, name='support_to_message')
+    path('', CreateMessageAPI.as_view())
 ]

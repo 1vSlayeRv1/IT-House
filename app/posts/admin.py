@@ -13,7 +13,7 @@ class ImagesInline(admin.TabularInline):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'date')
+    list_display = ('id', 'title', 'description', 'date')
     list_display_links = ('title', 'date')
     search_fields = ('title', 'date')
 
@@ -22,7 +22,7 @@ class PostAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('comment', 'date', 'profile_id', 'post_id')
+    list_display = ('id', 'comment', 'date', 'profile_id', 'post_id')
     list_display_links = ('comment', 'profile_id', 'post_id')
     search_fields = ('comment', 'profile_id', 'post_id')
 

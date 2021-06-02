@@ -9,7 +9,7 @@ class ProfileEventAdmin(admin.TabularInline):
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'date_start', 'date_end')
+    list_display = ('id', 'name', 'description', 'date_start', 'date_end')
     list_display_links = ('name',)
     search_fields = ('name',)
     readonly_fields = ['preview']
