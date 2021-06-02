@@ -4,9 +4,8 @@ from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Post, Comment
-from images.models import Image
 from django.contrib.auth import get_user_model
-from .serializers import CommentImageSerializer, CommentSerializer, PostSerializer, PostWithCommentsSerializer
+from .serializers import CommentSerializer, PostSerializer, PostWithCommentsSerializer
 User = get_user_model()
 
 
@@ -45,7 +44,9 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
             serializer.save()
             return Response(serializer.data)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
     def put(self, request):
         request.data['profile'] = request.user.pk
         comment = Comment.objects.filter(

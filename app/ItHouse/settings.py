@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'rest_framework',
     'corsheaders',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [

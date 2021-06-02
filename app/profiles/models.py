@@ -1,9 +1,8 @@
 from django.db import models
-import jwt
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from events.models import Event
-from django.conf import settings
-from datetime import datetime, timedelta
+
+
 
 class UserManager(BaseUserManager):
     """
@@ -38,13 +37,14 @@ class UserManager(BaseUserManager):
 
         return user
 
+
 class Profile(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(db_index=True, max_length=255, unique=True)
     email = models.EmailField(db_index=True, unique=True)
     firstname = models.CharField(max_length=100, null=True, blank=True,
-    verbose_name='Имя')
+                                 verbose_name='Имя')
     lastname = models.CharField(max_length=100, null=True, blank=True,
-    verbose_name='Фамилия')
+                                verbose_name='Фамилия')
     phone = models.CharField(max_length=15, null=True,
                              blank=True, verbose_name='телефон')
     age = models.SmallIntegerField(
@@ -55,16 +55,14 @@ class Profile(AbstractBaseUser, PermissionsMixin):
         max_length=3000, null=True, blank=True, verbose_name='знания')
     event = models.ForeignKey(
         Event, null=True, blank=True, on_delete=models.CASCADE)
-    role = models.ForeignKey('Role', null=True, blank=True, on_delete=models.CASCADE)
-   
+    role = models.ForeignKey(
+        'Role', null=True, blank=True, on_delete=models.CASCADE)
+
     is_active = models.BooleanField(default=True)
 
- 
     is_staff = models.BooleanField(default=False)
 
-
     created_at = models.DateTimeField(auto_now_add=True)
-
 
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -79,6 +77,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     # Сообщает Django, что определенный выше класс UserManager
     # должен управлять объектами этого типа.
     objects = UserManager()
+
     def get_id(self):
         return self.pk
 

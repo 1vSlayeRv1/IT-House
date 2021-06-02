@@ -31,3 +31,4 @@ django-cors-headers
 pyjwt
 djangorestframework-jwt
 easy-thumbnails
+django-cleanup

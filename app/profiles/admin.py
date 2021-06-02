@@ -8,6 +8,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_diplay_links = ('user',)
     search_fields = ('user', 'email')
 
+
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Role)
 admin.site.register(FieldOfInterest)
