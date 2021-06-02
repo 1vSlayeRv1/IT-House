@@ -1,4 +1,6 @@
 from django.db import models
+from images.models import Image
+from profiles.models import Profile
 
 
 class Event(models.Model):
@@ -10,6 +12,11 @@ class Event(models.Model):
         null=False, blank=False, verbose_name='дата начала')
     date_end = models.DateTimeField(
         null=False, blank=False, verbose_name='дата окончания')
+    file = models.ForeignKey(
+        Image, on_delete=models.CASCADE, null=True, blank=True,
+        verbose_name='изображение')
+    profile = models.ManyToManyField(
+        Profile, blank=True, related_name='profile_event')
 
     def __str__(self):
         return self.name

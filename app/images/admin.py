@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'file')
-    fields = ('file', 'preview', 'profile', 'post', 'support')
+    fields = ('file', 'preview', 'profile', 'post', 'support', 'event')
     readonly_fields = ['preview']
 
     def preview(self, obj):

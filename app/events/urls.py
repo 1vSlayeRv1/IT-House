@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import events
-
+from .views import ListEventsAPI, RetrieveUpdateDestroyEventsAPI
 
 urlpatterns = [
-    path('', events, name='events')
+    path('', ListEventsAPI.as_view()),
+    path('add/', RetrieveUpdateDestroyEventsAPI.as_view())
+ 
 ]

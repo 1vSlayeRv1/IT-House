@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from events.models import Event
 
 
 
@@ -53,8 +52,6 @@ class Profile(AbstractBaseUser, PermissionsMixin):
         null=True, blank=True, verbose_name='опыт работы')
     knowledge = models.TextField(
         max_length=3000, null=True, blank=True, verbose_name='знания')
-    event = models.ForeignKey(
-        Event, null=True, blank=True, on_delete=models.CASCADE)
     role = models.ForeignKey(
         'Role', null=True, blank=True, on_delete=models.CASCADE)
 
