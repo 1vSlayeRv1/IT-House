@@ -1,3 +1,4 @@
+from images.helpers import resize_logo
 from django.db import models
 from django.db.models.fields import related
 from django.utils.safestring import mark_safe
@@ -13,8 +14,12 @@ class Image(models.Model):
     post = models.ManyToManyField(Post, blank=True, related_name='post_image')
     support = models.ManyToManyField(MessageToSupport, blank=True, related_name='support_image')
 
-    def __str__(self):
-        return self.file.url
+    def save(self, *args, **kwargs):
+        super(Image, self).save(*args, **kwargs)
+
+        if self.file:
+            resize_logo(self)
+
     class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'

@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Image
 from django.contrib.auth import get_user_model
 from posts.models import Post
-from django.db.models import OuterRef
 from support.models import MessageToSupport
 
 class ImageProfileSerializer(serializers.ModelSerializer):

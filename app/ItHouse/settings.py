@@ -75,18 +75,7 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'rest_framework',
     'corsheaders',
-    'easy_thumbnails'
 ]
-
-THUMBNAIL_ALIASES = {
-    '': {
-        'default': {
-            'size': (96,96),
-            'crop': 'scale',
-        },
-    },
-}
-THUMBNAIL_BASEDIR = 'thumbnails'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
