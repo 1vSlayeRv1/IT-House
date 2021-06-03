@@ -9,6 +9,8 @@ class ImageAdmin(admin.ModelAdmin):
     readonly_fields = ['preview']
 
     def preview(self, obj):
-        return mark_safe(f'<img src="{obj.file.url}" style="max-height: 200px;">')
+        return mark_safe(
+            f'<img src="{obj.file.url}" style="max-height: 200px;">')
+
 
 admin.site.register(Image, ImageAdmin)

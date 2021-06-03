@@ -1,6 +1,3 @@
-from profiles.models import Profile
-from django.contrib.auth import get_user_model
-from rest_framework.relations import SlugRelatedField
 from rest_framework.exceptions import ValidationError
 from events.models import Event
 from rest_framework import serializers

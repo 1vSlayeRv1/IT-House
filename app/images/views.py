@@ -1,13 +1,13 @@
 from rest_framework import views
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .serializers import ImageProfileSerializer
 
 
 class ProfileFileUploadView(views.APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):

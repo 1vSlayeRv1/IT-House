@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 from rest_framework.generics import ListAPIView
 from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+
 from .models import Post, Comment
-from django.contrib.auth import get_user_model
 from .serializers import CommentSerializer, PostSerializer, PostWithCommentsSerializer
+
 User = get_user_model()
 
 

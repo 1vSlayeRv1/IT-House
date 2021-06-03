@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 
-
 class UserManager(BaseUserManager):
     """
     Django требует, чтобы кастомные пользователи определяли свой собственный
@@ -63,7 +62,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Дополнительный поля, необходимые Django
+    # Дополнительные поля, необходимые Django
     # при указании кастомной модели пользователя.
 
     # Свойство USERNAME_FIELD сообщает нам, какое поле мы будем использовать

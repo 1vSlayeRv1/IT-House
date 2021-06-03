@@ -1,4 +1,5 @@
 from django.db import models
+
 from profiles.models import Profile
 
 
@@ -22,8 +23,10 @@ class SupportSection(models.Model):
     section = models.CharField(
         max_length=150, null=False, blank=False,
         verbose_name='название раздела')
+
     def __str__(self):
         return self.section
+
     class Meta:
         verbose_name = 'Раздел поддержки'
         verbose_name_plural = 'Разделы поддержки'

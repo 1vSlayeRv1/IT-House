@@ -1,8 +1,8 @@
-from images.helpers import resize_logo
 from django.db import models
+
+from images.helpers import resize_logo
 from profiles.models import Profile
 from posts.models import Post
-
 from support.models import MessageToSupport
 from .utilities import get_timestamp_path
 

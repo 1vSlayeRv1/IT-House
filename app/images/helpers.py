@@ -2,8 +2,9 @@ from PIL import Image
 
 MAX_THUMBNAIL_SIZE = 200
 
+
 def resize_logo(instance):
-    
+
     width = instance.file.width
     height = instance.file.height
 
@@ -15,9 +16,7 @@ def resize_logo(instance):
         image = Image.open(filename)
         image = image.resize(
             (round(width / max_size * MAX_THUMBNAIL_SIZE),
-            round(width / max_size * MAX_THUMBNAIL_SIZE)),
+             round(width / max_size * MAX_THUMBNAIL_SIZE)),
             Image.ANTIALIAS
         )
         image.save(filename)
-
-
