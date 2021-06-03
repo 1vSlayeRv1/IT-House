@@ -2,6 +2,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
+from posts.serializers import ImageFileSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,3 +36,34 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+
+class ListProfileSerializer(serializers.ModelSerializer):
+
+    profile_image = ImageFileSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'username', 'email', 'firstname', 'lastname',
+                  'phone', 'age', 'work_exp', 'knowledge', 'role', 'profile_image')
+
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'firstname', 'lastname',
+                  'phone', 'age', 'work_exp', 'knowledge', 'role')
+
+    def update(self, instance, validated_data):
+        instance.firstname = validated_data['firstname']
+        instance.lastname = validated_data['lastname']
+        instance.phone = validated_data['phone']
+        instance.age = validated_data['age']
+        instance.work_exp = validated_data['work_exp']
+        instance.knowledge = validated_data['knowledge']
+        instance.role = validated_data['role']
+        instance.save(
+            update_fields=['firstname', 'lastname', 'phone', 'age', 'work_exp',
+                           'knowledge', 'role'])
+        return instance

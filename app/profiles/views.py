@@ -1,14 +1,14 @@
-import datetime
-import jwt   
+import jwt
 from django.core.exceptions import ValidationError
 from django.conf import settings
+from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.generics import ListCreateAPIView
 from rest_framework_jwt.utils import jwt_payload_handler
 
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ListProfileSerializer, UpdateProfileSerializer
 
 from django.contrib.auth import get_user_model
 
@@ -34,3 +34,26 @@ class RegisterView(APIView):
                 raise ValidationError('User validate error')
         else:
             raise ValidationError('User validate error')
+
+
+class ListCreateProfileAPI(ListCreateAPIView):
+    permission_classes = (IsAuthenticated, )
+    serializer_class = ListProfileSerializer
+    model = serializer_class.Meta.model
+
+    def get_queryset(self):
+        profile_id = self.request.user.pk
+        queryset = self.model.objects.get(id=profile_id)
+        return queryset
+
+    def list(self, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = ListProfileSerializer(queryset)
+        return Response(serializer.data)
+
+    def put(self, request):
+        user = User.objects.get(pk=request.user.pk)
+        serializer = UpdateProfileSerializer(user, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        return Response(serializer.data)
