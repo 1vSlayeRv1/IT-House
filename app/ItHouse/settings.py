@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_cleanup',
-  #  'silk'
+   # 'silk'
 ]
 
 MIDDLEWARE = [

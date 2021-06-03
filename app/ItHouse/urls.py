@@ -23,7 +23,7 @@ extra_patterns = [
     path('events/', include('events.urls')),
     path('auth/', include('profiles.urls')),
     path('images/', include('images.urls')),
-  #  path('silk/', include('silk.urls', namespace='silk'))
+   # path('silk/', include('silk.urls', namespace='silk'))
 ]
 
 urlpatterns = [
