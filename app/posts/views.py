@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
+from django.db.models import Prefetch
 from rest_framework.generics import ListAPIView
 from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny

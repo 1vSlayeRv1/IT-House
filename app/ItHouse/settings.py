@@ -37,8 +37,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
-
-
 # Application definition
 
 REST_FRAMEWORK = {
@@ -75,7 +73,8 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'rest_framework',
     'corsheaders',
-    'django_cleanup'
+    'django_cleanup',
+  #  'silk'
 ]
 
 MIDDLEWARE = [
@@ -84,6 +83,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+  #  'silk.middleware.SilkyMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
