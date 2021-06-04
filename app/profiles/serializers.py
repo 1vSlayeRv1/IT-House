@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 from rest_framework import serializers
 from posts.serializers import ImageFileSerializer
+from events.models import Event
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,14 +39,21 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class ListProfileSerializer(serializers.ModelSerializer):
+class EventProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event.profile.through
+        fields = ('id', )
 
+
+class ListProfileSerializer(serializers.ModelSerializer):
+    profile_event = EventProfileSerializer(read_only=True, many=True)
     profile_image = ImageFileSerializer(read_only=True, many=True)
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'username', 'email', 'firstname', 'lastname',
-                  'phone', 'age', 'work_exp', 'knowledge', 'role', 'profile_image')
+        fields = (
+            'id', 'username', 'email', 'firstname', 'lastname', 'phone', 'age',
+            'work_exp', 'knowledge', 'role', 'profile_image', 'profile_event')
 
 
 class UpdateProfileSerializer(serializers.ModelSerializer):

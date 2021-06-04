@@ -26,16 +26,16 @@ class PostTest(TestCase):
 class CommentTest(TestCase):
     def setUp(self):
         user = get_user_model()
-        self.user = user.objects.create(
+        user = user.objects.create(
             email='slayer@kek.lol', username='slayer', password='keklol123123')
-    def test_create_comment_to_post(self):
-        payload = jwt_payload_handler(self.user)
-        token = jwt.encode(payload, settings.SECRET_KEY).decode(
+        payload = jwt_payload_handler(user)
+        self.token = jwt.encode(payload, settings.SECRET_KEY).decode(
             'unicode_escape')
 
+    def test_create_comment_to_post(self):
+
         resp = self.client.post(
-                '/api/posts/comment/',
-                {'comment': 'Топовый коммент', 'post': 1},
-                **{'HTTP_AUTHORIZATION': f'Bearer {token}'}
-            )
+            '/api/posts/comment/',
+            {'comment': 'The Best Comment', 'post': 1},
+            **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'})
         self.assertEqual(resp.status_code, 201)

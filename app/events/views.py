@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Event
 from .serializers import EventAddSerializer, EventSerializer
+from django.contrib.auth import get_user_model
 
 
 class ListEventsAPI(ListAPIView):
@@ -25,8 +26,20 @@ class RetrieveUpdateDestroyEventsAPI(RetrieveUpdateDestroyAPIView):
             serializer = EventAddSerializer(event, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                return Response({'registration': 'success'}, status=status.HTTP_201_CREATED)
+                return Response(
+                    {'registration': 'success'},
+                    status=status.HTTP_201_CREATED)
             else:
                 raise ValidationError('Event Error')
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        event = Event.objects.filter(pk=request.data['event']).first()
+        if event:
+            user = get_user_model()
+            user = user.objects.get(pk=request.user.pk)
+            user.profile_event.remove(event)
+            return Response({'remove': 'success'}, status=status.HTTP_200_OK)
+        else:
+            raise ValidationError('Event not found.')

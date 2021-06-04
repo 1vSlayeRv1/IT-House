@@ -20,7 +20,7 @@ class CommentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         comment = Comment.objects.create(
             comment=validated_data['comment'],
-            profile=self.context['user'],
+            profile=self.context['profile'],
             post=validated_data['post']
         )
         comment.save()

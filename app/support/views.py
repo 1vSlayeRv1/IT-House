@@ -14,10 +14,8 @@ class CreateMessageAPI(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
-        request.data._mutable = True
-        request.data['profile'] = request.user.pk
-        request.data._mutable = False
-        serializer = SupportMessageSerializer(data=request.data)
+        serializer = SupportMessageSerializer(
+            data=request.data, context={'profile': request.user})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             for f in request.data.getlist('file'):

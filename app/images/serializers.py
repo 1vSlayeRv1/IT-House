@@ -6,12 +6,12 @@ class ImageProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ('file', 'profile')
+        fields = ('file', )
 
     def create(self, validated_data):
-        if Image.objects.filter(profile=validated_data['profile'][0]).exists():
-            Image.objects.filter(profile=validated_data['profile'][0]).delete()
+        if Image.objects.filter(profile=self.context['profile']).exists():
+            Image.objects.filter(profile=self.context['profile']).delete()
         image = Image.objects.create(file=validated_data['file'])
-        image.profile.set(validated_data['profile'])
+        image.profile.set([self.context['profile']])
         image.save()
         return image

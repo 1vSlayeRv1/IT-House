@@ -11,8 +11,8 @@ class ProfileFileUploadView(views.APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
-        request.data['profile'] = request.user.pk
-        serializer = ImageProfileSerializer(data=request.data)
+        serializer = ImageProfileSerializer(
+            data=request.data, context={'profile': request.user})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

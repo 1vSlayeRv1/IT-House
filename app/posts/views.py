@@ -43,7 +43,8 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        serializer = CommentSerializer(data=request.data, context={'user':request.user})
+        serializer = CommentSerializer(data=request.data, context={
+                                       'profile': request.user})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
