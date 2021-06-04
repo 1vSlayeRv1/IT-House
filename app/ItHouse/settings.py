@@ -74,7 +74,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_cleanup',
-   # 'silk'
+  #  'silk'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +83,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-  #  'silk.middleware.SilkyMiddleware',
+ #   'silk.middleware.SilkyMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,7 +119,7 @@ DATABASES = {
  'NAME': 'itdb',
  'USER': 'slayer',
  'PASSWORD': '1111',
- 'HOST': 'db',
+ 'HOST': 'localhost',
  'PORT': '',
  }
 }

@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import ListCreateAPIView
 from rest_framework_jwt.utils import jwt_payload_handler
-
+from rest_framework import status
 from .serializers import UserSerializer, ListProfileSerializer, UpdateProfileSerializer
 
 from django.contrib.auth import get_user_model
@@ -29,7 +29,7 @@ class RegisterView(APIView):
             serializer.save()
             user = User.objects.get(email=request.data['email'])
             if user.check_password(request.data['password']):
-                return Response({'token': self.create_token(user)})
+                return Response({'token': self.create_token(user)}, status=status.HTTP_201_CREATED)
             else:
                 raise ValidationError('User validate error')
         else:

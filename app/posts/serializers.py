@@ -10,7 +10,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('comment', 'post')
 
     def validate(self, attrs):
         if attrs['comment'] == '':
@@ -20,7 +20,7 @@ class CommentSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         comment = Comment.objects.create(
             comment=validated_data['comment'],
-            profile=validated_data['profile'],
+            profile=self.context['user'],
             post=validated_data['post']
         )
         comment.save()

@@ -1,11 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from django.db.models import Prefetch
+from django.db.models import query
+from django.db.models.query import QuerySet
 from rest_framework.generics import ListAPIView
 from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-
+from images.models import Image
 from .models import Post, Comment
 from .serializers import CommentSerializer, PostSerializer, PostWithCommentsSerializer
 
@@ -41,8 +43,7 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        request.data['profile'] = request.user.pk
-        serializer = CommentSerializer(data=request.data)
+        serializer = CommentSerializer(data=request.data, context={'user':request.user})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
@@ -51,7 +52,6 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
                             status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        request.data['profile'] = request.user.pk
         comment = Comment.objects.filter(
             pk=request.data['id']).filter(
             profile=request.user.pk).first()

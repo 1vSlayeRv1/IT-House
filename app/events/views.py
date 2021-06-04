@@ -25,7 +25,7 @@ class RetrieveUpdateDestroyEventsAPI(RetrieveUpdateDestroyAPIView):
             serializer = EventAddSerializer(event, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                return Response({'registration': 'success'})
+                return Response({'registration': 'success'}, status=status.HTTP_201_CREATED)
             else:
                 raise ValidationError('Event Error')
         else:
