@@ -119,7 +119,7 @@ DATABASES = {
  'NAME': 'itdb',
  'USER': 'slayer',
  'PASSWORD': '1111',
- 'HOST': 'localhost',
+ 'HOST': 'db',
  'PORT': '',
  }
 }

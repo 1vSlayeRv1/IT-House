@@ -32,8 +32,11 @@ class ListDetailPosts(ListAPIView):
 
     def list(self, *args, **kwargs):
         queryset = self.get_queryset()
-        serializer = PostWithCommentsSerializer(queryset, many=True)
-        return Response(serializer.data[0])
+        if queryset:
+            serializer = PostWithCommentsSerializer(queryset, many=True)
+            return Response(serializer.data[0])
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class CreateUpdateDestroyComments(mixins.CreateModelMixin,
@@ -47,7 +50,7 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
                                        'profile': request.user})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)

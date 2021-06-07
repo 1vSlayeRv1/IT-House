@@ -21,9 +21,8 @@ extra_patterns = [
     path('posts/', include('posts.urls')),
     path('support/', include('support.urls')),
     path('events/', include('events.urls')),
-    path('auth/', include('profiles.urls')),
-    path('profile/', include('profiles.urls')),
     path('images/', include('images.urls')),
+    path('', include('profiles.urls')),
    # path('silk/', include('silk.urls', namespace='silk'))
 ]
 

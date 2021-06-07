@@ -11,9 +11,10 @@ from django.test.client import MULTIPART_CONTENT, BOUNDARY, encode_multipart
 
 
 class EventsTest(TestCase):
-    def setUp(self):
+    @classmethod
+    def setUpTestData(cls):
         user = get_user_model()
-        self.user = user.objects.create(
+        user = user.objects.create(
             email='slayer@kek.lol', username='slayer', password='keklol123123')
         image = Image.objects.create(file='test.jpg')
         Event.objects.create(
@@ -23,8 +24,8 @@ class EventsTest(TestCase):
             date_end=datetime(
                 2013, 11, 20, 20, 8, 7, 127325, tzinfo=pytz.UTC),
             file=image)
-        payload = jwt_payload_handler(self.user)
-        self.token = jwt.encode(payload, settings.SECRET_KEY).decode(
+        payload = jwt_payload_handler(user)
+        cls.token = jwt.encode(payload, settings.SECRET_KEY).decode(
             'unicode_escape')
 
     def test_add_profile_to_event(self):

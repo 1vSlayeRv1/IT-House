@@ -9,17 +9,18 @@ from django.test.client import MULTIPART_CONTENT, BOUNDARY, encode_multipart
 
 
 class PostTest(TestCase):
-    def setUp(self):
-        Post.objects.create(
-            title='Топовый пост', description='Краткое описание топ поста',
-            content='Ну тут очень много контента xD')
+    @classmethod
+    def setUpTestData(cls):
+        cls.post = Post.objects.create(
+            title='Топовый пост1', description='Краткое описание топ поста1',
+            content='1Ну тут очень много контента xD')
 
     def test_list_load_posts(self):
         resp = self.client.get('/api/posts/')
         self.assertEqual(resp.status_code, 200)
 
     def test_detail_load_posts(self):
-        resp = self.client.get('/api/posts/1')
+        resp = self.client.get('/api/posts/2')
         self.assertEqual(resp.status_code, 200)
 
 
@@ -31,6 +32,9 @@ class CommentTest(TestCase):
         payload = jwt_payload_handler(user)
         self.token = jwt.encode(payload, settings.SECRET_KEY).decode(
             'unicode_escape')
+        Post.objects.create(
+            title='Топовый пост', description='Краткое описание топ поста',
+            content='Ну тут очень много контента xD')
 
     def test_create_comment_to_post(self):
 
