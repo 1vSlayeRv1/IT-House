@@ -13,7 +13,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display_links = ('name',)
     search_fields = ('name',)
     readonly_fields = ['preview']
-    fields = ('name', 'description', 'date_start',
+    fields = ('name', 'description', 'office', 'date_start',
               'date_end', 'file', 'preview')
     inlines = (ProfileEventAdmin, )
 

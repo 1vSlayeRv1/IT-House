@@ -18,7 +18,6 @@ class MessageToSupport(models.Model):
         verbose_name = 'Сообщение в поддержку'
         verbose_name_plural = 'Сообщения в поддержку'
 
-
 class SupportSection(models.Model):
     section = models.CharField(
         max_length=150, null=False, blank=False,

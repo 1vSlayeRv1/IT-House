@@ -14,11 +14,11 @@ class ImageEventSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     file = ImageEventSerializer(read_only=True)
-
+    office = serializers.StringRelatedField(source='office.address', read_only=True)
     class Meta:
         model = Event
         fields = ('id', 'name', 'description',
-                  'date_start', 'date_end', 'file')
+                  'date_start', 'date_end', 'file', 'office')
 
 
 class EventAddSerializer(serializers.ModelSerializer):

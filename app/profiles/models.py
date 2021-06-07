@@ -82,6 +82,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Профили'
 
 
+
 class FieldOfInterest(models.Model):
     field = models.CharField(max_length=100, null=False,
                              blank=False, verbose_name='сфера интереса')

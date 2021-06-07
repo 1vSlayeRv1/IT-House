@@ -1,11 +1,9 @@
 from django.test import TestCase
 from posts.models import Post
 import jwt
-from datetime import datetime
 from django.contrib.auth import get_user_model
 from rest_framework_jwt.utils import jwt_payload_handler
 from django.conf import settings
-from django.test.client import MULTIPART_CONTENT, BOUNDARY, encode_multipart
 
 
 class PostTest(TestCase):

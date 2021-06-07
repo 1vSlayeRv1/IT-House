@@ -7,8 +7,6 @@ from django.conf import settings
 from .models import Event
 from images.models import Image
 import pytz
-from django.test.client import MULTIPART_CONTENT, BOUNDARY, encode_multipart
-
 
 class EventsTest(TestCase):
     @classmethod
@@ -38,6 +36,16 @@ class EventsTest(TestCase):
         )
         self.assertEqual(resp.status_code, 201)
 
+    def test_add_profile_to_invalid_event(self):
+
+        resp = self.client.put(
+            '/api/events/add/',
+            data={'event': 999},
+            content_type='application/json',
+            **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
+        )
+        self.assertEqual(resp.status_code, 400)
+
     def test_events_list(self):
         resp = self.client.get('/api/events/',)
         self.assertEqual(resp.status_code, 200)
@@ -50,3 +58,12 @@ class EventsTest(TestCase):
             **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
         )
         self.assertEqual(resp.status_code, 200)
+
+    def test_delete_invalud_event_from_profile(self):
+        resp = self.client.delete(
+            '/api/events/add/',
+            data={'event': '999'},
+            content_type='application/json',
+            **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
+        )
+        self.assertEqual(resp.status_code, 400)

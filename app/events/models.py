@@ -12,6 +12,7 @@ class Event(models.Model):
         null=False, blank=False, verbose_name='дата начала')
     date_end = models.DateTimeField(
         null=False, blank=False, verbose_name='дата окончания')
+    office = models.ForeignKey('Office', null=True, blank=True, on_delete=models.CASCADE, verbose_name='офис')
     file = models.ForeignKey(
         Image, on_delete=models.CASCADE, null=True, blank=True,
         verbose_name='изображение')
@@ -24,6 +25,7 @@ class Event(models.Model):
     class Meta:
         verbose_name = 'Событие'
         verbose_name_plural = 'События'
+        ordering = ['-id']
 
 
 class Office(models.Model):
@@ -31,7 +33,6 @@ class Office(models.Model):
                             blank=False, verbose_name='название')
     address = models.CharField(
         max_length=150, null=False, blank=False, verbose_name='адрес')
-    events = models.ManyToManyField('Event')
 
     class Meta:
         verbose_name = 'Офис'

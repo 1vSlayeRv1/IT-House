@@ -12,13 +12,13 @@ class Post(models.Model):
         verbose_name='краткое описание')
     content = models.TextField(null=False, blank=False, verbose_name='контент')
     date = models.DateTimeField(
-        auto_now_add=True, null=False, db_index=True,
+        auto_now=True, null=False, db_index=True,
         verbose_name='дата создания')
 
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
-
+        ordering = ['-date']
 
 class Comment(models.Model):
     comment = models.CharField(
@@ -33,3 +33,4 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+        ordering = ['-date']
