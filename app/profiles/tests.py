@@ -7,15 +7,15 @@ class AuthTest(TestCase):
         resp = self.client.post(reverse('signup'), {
             "username": "slayer",
             "email": "slayer@kek.lol",
-            "password": "keklol123123",
-            "password_repeat": "keklol123123"
+            "password": "Keklol123123",
+            "password_repeat": "Keklol123123"
         })
         self.assertEqual(resp.status_code, 201)
 
     def test_signin_user_valid(self):
         resp = self.client.post(reverse('signin'), {
             'email': 'slayer@kek.lol',
-            'password': 'keklol123123'
+            'password': 'Keklol123123'
         })
         self.assertEqual(resp.status_code, 200)
 

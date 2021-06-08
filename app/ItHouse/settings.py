@@ -157,7 +157,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', }, ]
+    {'NAME': 'profiles.validators.NumberValidator',
+        'OPTIONS': {
+            'min_digits': 2, }},
+    {'NAME': 'profiles.validators.UppercaseValidator', },
+    {'NAME': 'profiles.validators.LowercaseValidator', },
+    {'NAME': 'profiles.validators.SymbolValidator', },
+
+
+]
 
 
 # Internationalization
