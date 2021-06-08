@@ -1,13 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
-from django.db.models import Prefetch
-from django.db.models import query
-from django.db.models.query import QuerySet
 from rest_framework.generics import ListAPIView
 from rest_framework import mixins, views, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from images.models import Image
 from .models import Post, Comment
 from .serializers import CommentSerializer, PostSerializer, PostWithCommentsSerializer
 
@@ -16,12 +12,14 @@ User = get_user_model()
 
 class ListPosts(ListAPIView):
     permission_classes = (AllowAny, )
+    throttle_scope = 'posts'
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class ListDetailPosts(ListAPIView):
     permission_classes = (AllowAny, )
+    throttle_scope = 'posts'
     serializer_class = PostWithCommentsSerializer
     model = serializer_class.Meta.model
 
@@ -44,6 +42,7 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
                                   mixins.DestroyModelMixin,
                                   views.APIView):
     permission_classes = (IsAuthenticated,)
+    throttle_scope = 'comments'
 
     def post(self, request):
         serializer = CommentSerializer(data=request.data, context={

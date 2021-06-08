@@ -9,6 +9,7 @@ from .serializers import ImageProfileSerializer
 class ProfileFileUploadView(views.APIView):
     permission_classes = (IsAuthenticated, )
     parser_classes = [MultiPartParser, FormParser]
+    throttle_scope = 'imageupload'
 
     def post(self, request):
         serializer = ImageProfileSerializer(

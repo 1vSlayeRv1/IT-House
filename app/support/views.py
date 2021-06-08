@@ -12,6 +12,7 @@ class CreateMessageAPI(APIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = SupportMessageSerializer
     parser_classes = [MultiPartParser, FormParser]
+    throttle_scope = 'support'
 
     def post(self, request):
         serializer = SupportMessageSerializer(

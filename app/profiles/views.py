@@ -17,6 +17,7 @@ User = get_user_model()
 
 class RegisterView(APIView):
     permission_classes = (AllowAny, )
+    throttle_scope = 'signup'
 
     def create_token(self, user):
         payload = jwt_payload_handler(user)
@@ -29,7 +30,9 @@ class RegisterView(APIView):
             serializer.save()
             user = User.objects.get(email=request.data['email'])
             if user.check_password(request.data['password']):
-                return Response({'token': self.create_token(user)}, status=status.HTTP_201_CREATED)
+                return Response(
+                    {'token': self.create_token(user)},
+                    status=status.HTTP_201_CREATED)
             else:
                 raise ValidationError('User validate error')
         else:
@@ -40,6 +43,7 @@ class ListCreateProfileAPI(ListCreateAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = ListProfileSerializer
     model = serializer_class.Meta.model
+    throttle_scope = 'profile'
 
     def get_queryset(self):
         profile_id = self.request.user.pk

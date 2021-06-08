@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 import datetime
+from re import M
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -48,10 +50,29 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'posts':  '30/minute',
+        'signup': '5/minute',
+        'comments': '10/minute',
+        'imageupload': '2/minute',
+        'checkevents': '30/minute',
+        'addevents': '5/minute',
+        'profile': '20/minute',
+        'support': '1/minute'
+    }
 }
 
+TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
+
+if TESTING:
+  del REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES']
+
 JWT_AUTH = {
- 
+
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3000),
@@ -74,7 +95,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_cleanup',
-  #  'silk'
+    #  'silk'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +104,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
- #   'silk.middleware.SilkyMiddleware',
+    #   'silk.middleware.SilkyMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -114,14 +135,14 @@ WSGI_APPLICATION = 'ItHouse.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
- 'default': {
- 'ENGINE': 'django.db.backends.postgresql_psycopg2',
- 'NAME': 'itdb',
- 'USER': 'slayer',
- 'PASSWORD': '1111',
- 'HOST': 'db',
- 'PORT': '',
- }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'itdb',
+        'USER': 'slayer',
+        'PASSWORD': '1111',
+        'HOST': 'db',
+        'PORT': '',
+    }
 }
 
 
@@ -130,18 +151,11 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', }, ]
 
 
 # Internationalization
@@ -167,4 +181,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

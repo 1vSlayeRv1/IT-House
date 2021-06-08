@@ -12,12 +12,14 @@ class ListEventsAPI(ListAPIView):
     permission_classes = (AllowAny, )
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    throttle_scope = 'checkevents'
 
 
 class RetrieveUpdateDestroyEventsAPI(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = EventAddSerializer
     queryset = Event.objects.all()
+    throttle_scope = 'addevents'
 
     def put(self, request):
         request.data['profile'] = request.user.pk
