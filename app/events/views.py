@@ -1,8 +1,9 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework import status
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListAPIView, mixins
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework import views
 from .models import Event
 from .serializers import EventAddSerializer, EventSerializer
 from django.contrib.auth import get_user_model
@@ -15,10 +16,8 @@ class ListEventsAPI(ListAPIView):
     throttle_scope = 'checkevents'
 
 
-class RetrieveUpdateDestroyEventsAPI(RetrieveUpdateDestroyAPIView):
+class RetrieveUpdateDestroyEventsAPI(views.APIView):
     permission_classes = (IsAuthenticated, )
-    serializer_class = EventAddSerializer
-    queryset = Event.objects.all()
     throttle_scope = 'addevents'
 
     def put(self, request):

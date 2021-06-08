@@ -32,3 +32,4 @@ pyjwt
 djangorestframework-jwt
 easy-thumbnails
 django-cleanup
+drf-yasg

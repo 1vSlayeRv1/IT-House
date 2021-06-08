@@ -63,7 +63,8 @@ REST_FRAMEWORK = {
         'addevents': '5/minute',
         'profile': '20/minute',
         'support': '1/minute'
-    }
+    },
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
@@ -95,6 +96,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_cleanup',
+    'drf_yasg',
     #  'silk'
 ]
 

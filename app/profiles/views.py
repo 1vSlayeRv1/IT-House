@@ -5,7 +5,7 @@ from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, ListAPIView
 from rest_framework_jwt.utils import jwt_payload_handler
 from rest_framework import status
 from .serializers import UserSerializer, ListProfileSerializer, UpdateProfileSerializer
@@ -39,7 +39,7 @@ class RegisterView(APIView):
             raise ValidationError('User validate error')
 
 
-class ListCreateProfileAPI(ListCreateAPIView):
+class ListCreateProfileAPI(ListAPIView):
     permission_classes = (IsAuthenticated, )
     serializer_class = ListProfileSerializer
     model = serializer_class.Meta.model
