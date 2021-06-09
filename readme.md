@@ -1,7 +1,7 @@
 <h1>Добро пожаловать в ItHouse xD</h1>
 
 Для запуска с помощью docker-compose собрать проект с помощью makefile: <br>
-<code>make build</code>
+<code>make docker</code>
 
 Для запуска вручную: <br>
 <code>sudo docker-compose build </code> <br>
