@@ -1,6 +1,6 @@
 
 .PHONY: run
-run: 
+run:
 	( \
        . venv/bin/activate; \
        python3 app/manage.py runserver; \
@@ -15,3 +15,11 @@ build:
 docker:
 	sudo docker-compose build
 	sudo docker-compose up
+redis:
+	redis-server
+celery:
+	( \
+	. venv/bin/activate; \
+	cd app; \
+	celery --app=ItHouse.celery worker; \
+	)
