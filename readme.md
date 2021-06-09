@@ -1,5 +1,7 @@
 <h1>Добро пожаловать в ItHouse xD</h1>
-
+Для начала напишите свою google почту и пароль в файл env.dev <br>
+<code>EMAIL_HOST_USER='ваш_google'</code> <br>
+<code>EMAIL_HOST_PASSWORD='ваш_пароль'</code> <br>
 Для запуска с помощью docker-compose собрать проект с помощью makefile: <br>
 <code>make docker</code>
 
