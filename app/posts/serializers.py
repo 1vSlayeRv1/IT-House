@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, StringRelatedField
 from rest_framework.exceptions import ValidationError
 
 from .models import Post, Comment
@@ -6,7 +6,7 @@ from images.models import Image
 from profiles.models import Profile
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(ModelSerializer):
 
     class Meta:
         model = Comment
@@ -34,15 +34,15 @@ class CommentSerializer(serializers.ModelSerializer):
         return instance
 
 
-class ImageFileSerializer(serializers.ModelSerializer):
-    file = serializers.StringRelatedField(source='file.url', read_only=True)
+class ImageFileSerializer(ModelSerializer):
+    file = StringRelatedField(source='file.url', read_only=True)
 
     class Meta:
         model = Image
         fields = ('file', )
 
 
-class ProfileImageSerializer(serializers.ModelSerializer):
+class ProfileImageSerializer(ModelSerializer):
     profile_image = ImageFileSerializer(read_only=True, many=True)
 
     class Meta:
@@ -50,7 +50,7 @@ class ProfileImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'profile_image')
 
 
-class CommentImageSerializer(serializers.ModelSerializer):
+class CommentImageSerializer(ModelSerializer):
     profile = ProfileImageSerializer(read_only=True)
 
     class Meta:
@@ -58,7 +58,7 @@ class CommentImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'comment', 'date', 'profile', 'post')
 
 
-class PostWithCommentsSerializer(serializers.ModelSerializer):
+class PostWithCommentsSerializer(ModelSerializer):
 
     comments = CommentImageSerializer(many=True, read_only=True)
     post_image = ImageFileSerializer(read_only=True, many=True)
@@ -69,7 +69,7 @@ class PostWithCommentsSerializer(serializers.ModelSerializer):
                   'post_image', 'date', 'comments')
 
 
-class PostSerializer(serializers.ModelSerializer):
+class PostSerializer(ModelSerializer):
 
     class Meta:
         model = Post

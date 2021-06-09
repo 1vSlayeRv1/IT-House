@@ -33,3 +33,5 @@ djangorestframework-jwt
 easy-thumbnails
 django-cleanup
 drf-yasg
+celery
+redis

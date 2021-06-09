@@ -10,6 +10,7 @@ services:
       - '8000:8000'
     depends_on:
         - db
+        - redis
     env_file:
         - ./env.dev
   db:
@@ -21,5 +22,19 @@ services:
       - POSTGRES_USER=slayer
       - POSTGRES_PASSWORD=1111
       - POSTGRES_DB=itdb
+  redis:
+    image: redis:alpine
+  celery:
+    build: ./app
+    command: celery --app=ItHouse.celery worker
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - redis
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER_URL=redis://redis:6379
+      - CELERY_RESULT_BACKEND=redis://redis:6379
 volumes:
   postgres_data:

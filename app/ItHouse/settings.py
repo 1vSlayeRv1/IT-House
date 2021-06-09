@@ -15,6 +15,7 @@ import os
 import sys
 import datetime
 from re import M
+from django.core.management.utils import get_random_secret_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!(@78bp#hk#ivj-j1ih^-_u79o^k%ldy%^1@fm*6b(3mf^1)#j'
+SECRET_KEY = get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -72,6 +73,28 @@ TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:
   del REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES']
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "ithouse.autobot@gmail.com"
+EMAIL_HOST_PASSWORD = "Keklol123"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = '6379'
+# CELERY settings
+
+CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
+
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+#CELERY_BROKER_URL='redis://redis:6379'
+#CELERY_RESULT_BACKEND='redis://redis:6379'
+#if local
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
 JWT_AUTH = {
 
     'JWT_VERIFY': True,
@@ -142,7 +165,7 @@ DATABASES = {
         'NAME': 'itdb',
         'USER': 'slayer',
         'PASSWORD': '1111',
-        'HOST': 'db',
+        'HOST': os.getenv('SQL_HOST', 'localhost'),
         'PORT': '',
     }
 }

@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-
-
+from django.db.models import signals
+import uuid
+from .tasks import send_hello_email
 class UserManager(BaseUserManager):
     """
     Django требует, чтобы кастомные пользователи определяли свой собственный
@@ -20,7 +21,7 @@ class UserManager(BaseUserManager):
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
         user.save()
-
+ 
         return user
 
     def create_superuser(self, username, email, password):
@@ -32,7 +33,7 @@ class UserManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.save()
-
+        
         return user
 
 
@@ -53,7 +54,7 @@ class Profile(AbstractBaseUser, PermissionsMixin):
         max_length=3000, null=True, blank=True, verbose_name='знания')
     role = models.ForeignKey(
         'Role', null=True, blank=True, on_delete=models.CASCADE)
-
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     is_active = models.BooleanField(default=True)
 
     is_staff = models.BooleanField(default=False)
@@ -80,7 +81,6 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Профиль'
         verbose_name_plural = 'Профили'
-
 
 
 class FieldOfInterest(models.Model):

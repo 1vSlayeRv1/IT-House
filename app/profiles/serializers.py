@@ -1,20 +1,20 @@
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError
 from posts.serializers import ImageFileSerializer
 from events.models import Event
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(ModelSerializer):
     User = get_user_model()
-    email = serializers.EmailField(
+    email = EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())])
 
-    password = serializers.CharField(write_only=True, required=True,
+    password = CharField(write_only=True, required=True,
                                      validators=[validate_password])
-    password_repeat = serializers.CharField(write_only=True, required=True)
+    password_repeat = CharField(write_only=True, required=True)
 
     class Meta:
         model = get_user_model()
@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password_repeat']:
-            raise serializers.ValidationError(
+            raise ValidationError(
                 {'password': 'Пароли не совпадают!'})
         return attrs
 
@@ -39,29 +39,37 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class EventProfileSerializer(serializers.ModelSerializer):
+class EventProfileSerializer(ModelSerializer):
     class Meta:
         model = Event.profile.through
         fields = ('id', )
 
 
-class ListProfileSerializer(serializers.ModelSerializer):
+class ListProfileSerializer(ModelSerializer):
     profile_event = EventProfileSerializer(read_only=True, many=True)
     profile_image = ImageFileSerializer(read_only=True, many=True)
 
     class Meta:
         model = get_user_model()
         fields = (
-            'id', 'username', 'email', 'firstname', 'lastname', 'phone', 'age',
-            'work_exp', 'knowledge', 'role', 'profile_image', 'profile_event')
+            'id', 'username',
+            'email', 'firstname', 
+            'lastname', 'phone', 
+            'age', 'work_exp', 
+            'knowledge', 'role', 
+            'profile_image', 'profile_event'
+        )
 
 
-class UpdateProfileSerializer(serializers.ModelSerializer):
+class UpdateProfileSerializer(ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ('id', 'firstname', 'lastname',
-                  'phone', 'age', 'work_exp', 'knowledge', 'role')
+        fields = (
+            'id', 'firstname', 
+            'lastname', 'phone', 
+            'age', 'work_exp', 
+            'knowledge', 'role')
 
     def update(self, instance, validated_data):
         instance.firstname = validated_data['firstname']
@@ -72,6 +80,9 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
         instance.knowledge = validated_data['knowledge']
         instance.role = validated_data['role']
         instance.save(
-            update_fields=['firstname', 'lastname', 'phone', 'age', 'work_exp',
-                           'knowledge', 'role'])
+            update_fields=[
+                'firstname', 'lastname', 
+                'phone', 'age', 
+                'work_exp', 'knowledge', 
+                'role'])
         return instance

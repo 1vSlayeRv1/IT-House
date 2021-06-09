@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 from rest_framework.generics import ListAPIView
 from rest_framework import mixins, views, status
@@ -63,8 +62,6 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                raise ValidationError('Comment Error')
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 

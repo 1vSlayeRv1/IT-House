@@ -1,27 +1,34 @@
 from rest_framework.exceptions import ValidationError
 from events.models import Event
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer, StringRelatedField
 from images.models import Image
 
 
-class ImageEventSerializer(serializers.ModelSerializer):
-    file = serializers.StringRelatedField(source='file.url', read_only=True)
+class ImageEventSerializer(ModelSerializer):
+    file = StringRelatedField(source='file.url', read_only=True)
 
     class Meta:
         model = Image
         fields = ('file', )
 
 
-class EventSerializer(serializers.ModelSerializer):
+class EventSerializer(ModelSerializer):
     file = ImageEventSerializer(read_only=True)
-    office = serializers.StringRelatedField(source='office.address', read_only=True)
+    office = StringRelatedField(source='office.address', read_only=True)
     class Meta:
         model = Event
-        fields = ('id', 'name', 'description',
-                  'date_start', 'date_end', 'file', 'office')
+        fields = (
+            'id',
+            'name',
+            'description',
+            'date_start',
+            'date_end',
+            'file',
+            'office'
+        )
 
 
-class EventAddSerializer(serializers.ModelSerializer):
+class EventAddSerializer(ModelSerializer):
 
     class Meta:
         model = Event.profile.through

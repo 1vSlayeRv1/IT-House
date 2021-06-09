@@ -8,6 +8,7 @@ from .models import Event
 from images.models import Image
 import pytz
 
+
 class EventsTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -27,7 +28,6 @@ class EventsTest(TestCase):
             'unicode_escape')
 
     def test_add_profile_to_event(self):
-
         resp = self.client.put(
             '/api/events/add/',
             data={'event': 1},
@@ -37,7 +37,6 @@ class EventsTest(TestCase):
         self.assertEqual(resp.status_code, 201)
 
     def test_add_profile_to_invalid_event(self):
-
         resp = self.client.put(
             '/api/events/add/',
             data={'event': 999},
