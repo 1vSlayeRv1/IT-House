@@ -1,28 +1,27 @@
-Добро пожаловать в ItHouse xD
+<h1>Добро пожаловать в ItHouse xD</h1>
 
-Для запуска с помощью docker-compose собрать проект с помощью makefile:
-make build
+Для запуска с помощью docker-compose собрать проект с помощью makefile: <br>
+<code>make build</code>
 
-Для запуска вручную:
-sudo docker-compose build
-sudo docker-compose up
+Для запуска вручную: <br>
+<code>sudo docker-compose build </code> <br>
+<code>sudo docker-compose up</code>
 
 Если не работает, то,
-чтобы удалить всё из БД и применить миграции заново:
-sudo docker-compose build
-sudo docker-compose up
-sudo docker-compose exec db psql -U slayer -d itdb
+чтобы удалить всё из БД и применить миграции заново: <br>
+<code>sudo docker-compose build</code><br>
+<code>sudo docker-compose up</code><br>
+<code>sudo docker-compose exec db psql -U slayer -d itdb</code><br>
 
-SELECT 'drop table if exists "' || tablename || '" cascade;' as pg_tbl_drop
+<code>SELECT 'drop table if exists "' || tablename || '" cascade;' as pg_tbl_drop
 FROM pg_tables
-WHERE schemaname='public';
+WHERE schemaname='public';</code> <br>
 
-копируем и вставляем код, который нам выдало в ответ после
-последней команды и выполняем дроп таблиц,
-далее:
+копируем и вставляем код, который нам выдало в ответ после последней команды и <br>
+выполняем дроп таблиц, далее:
 
-sudo docker-compose exec web python3 manage.py makemigrations
+<code>sudo docker-compose exec web python3 manage.py makemigrations</code><br>
 
-sudo docker-compose exec web python3 manage.py migrate
+<code>sudo docker-compose exec web python3 manage.py migrate</code><br>
 
-sudo docker-compose exec web python3 manage.py createsuperuser
+<code>sudo docker-compose exec web python3 manage.py createsuperuser</code><br>
