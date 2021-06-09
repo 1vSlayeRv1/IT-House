@@ -5,9 +5,12 @@
 
 Для запуска вручную: <br>
 <code>sudo docker-compose build </code> <br>
-<code>sudo docker-compose up</code>
+<code>sudo docker-compose up</code> <br>
 
-Если не работает, то,
+Чтобы выполнить миграции в докере:
+<code>sudo docker-compose exec web python3 manage.py migrate</code> <br>
+
+Если не работает, то, возможно проблемы с миграциями
 чтобы удалить всё из БД и применить миграции заново: <br>
 <code>sudo docker-compose build</code><br>
 <code>sudo docker-compose up</code><br>
