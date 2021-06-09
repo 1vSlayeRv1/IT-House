@@ -93,8 +93,10 @@ CELERY_RESULT_SERIALIZER = 'json'
 #CELERY_BROKER_URL='redis://redis:6379'
 #CELERY_RESULT_BACKEND='redis://redis:6379'
 #if local
+BROKER_TRANSPORT = "redis"
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
+
 JWT_AUTH = {
 
     'JWT_VERIFY': True,

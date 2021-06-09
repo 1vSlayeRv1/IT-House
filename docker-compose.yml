@@ -31,10 +31,9 @@ services:
       - .:/usr/src/app
     depends_on:
       - redis
-    environment:
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-      - CELERY_BROKER_URL=redis://redis:6379
-      - CELERY_RESULT_BACKEND=redis://redis:6379
+      - db
+      - web
+    env_file:
+      - ./env.dev
 volumes:
   postgres_data:

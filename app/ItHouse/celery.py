@@ -7,7 +7,7 @@ from celery import Celery
 # эти настройки.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ItHouse.settings')
 # Создаем объект(экземпляр класса) celery и даем ему имя
-app = Celery('hello')
+app = Celery('hello', broker='redis://redis:6379/0')
 # Загружаем config с настройками для объекта celery.
 # т.е. импортируем настройки из django файла settings
 # namespace='CELERY' - в данном случае говорит о том, что применятся будут только 
