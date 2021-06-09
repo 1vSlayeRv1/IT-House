@@ -29,9 +29,9 @@ class RetrieveUpdateDestroyEventsAPI(APIView):
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError('Event Error')
+                raise ValidationError('Event validation rrror')
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request):
         event = Event.objects.filter(pk=request.data['event']).first()
@@ -41,4 +41,4 @@ class RetrieveUpdateDestroyEventsAPI(APIView):
             user.profile_event.remove(event)
             return Response(status=status.HTTP_200_OK)
         else:
-            raise ValidationError('Event not found.')
+            return Response(status=status.HTTP_404_NOT_FOUND)

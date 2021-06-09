@@ -8,14 +8,26 @@ from .utilities import get_timestamp_path
 
 
 class Image(models.Model):
-    file = models.ImageField(blank=True, null=True,
-                             verbose_name='изображение',
-                             upload_to=get_timestamp_path)
+    file = models.ImageField(
+        blank=True, 
+        null=True,
+        verbose_name='изображение',
+        upload_to=get_timestamp_path)
+
     profile = models.ManyToManyField(
-        Profile, blank=True, related_name='profile_image')
-    post = models.ManyToManyField(Post, blank=True, related_name='post_image')
+        Profile, 
+        blank=True, 
+        related_name='profile_image')
+
+    post = models.ManyToManyField(
+        Post, 
+        blank=True, 
+        related_name='post_image')
+
     support = models.ManyToManyField(
-        MessageToSupport, blank=True, related_name='support_image')
+        MessageToSupport, 
+        blank=True, 
+        related_name='support_image')
 
     def save(self, *args, **kwargs):
         super(Image, self).save(*args, **kwargs)

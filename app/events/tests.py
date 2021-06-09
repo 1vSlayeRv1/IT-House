@@ -43,7 +43,7 @@ class EventsTest(TestCase):
             content_type='application/json',
             **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
         )
-        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(resp.status_code, 404)
 
     def test_events_list(self):
         resp = self.client.get('/api/events/',)
@@ -65,4 +65,4 @@ class EventsTest(TestCase):
             content_type='application/json',
             **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'}
         )
-        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(resp.status_code, 404)

@@ -18,7 +18,11 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ['id', 'username', 'password', 'password_repeat', 'email']
+        fields = [
+            'id', 'username', 
+            'password', 'password_repeat', 
+            'email'
+        ]
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password_repeat']:

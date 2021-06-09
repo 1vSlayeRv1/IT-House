@@ -1,8 +1,8 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 from .models import Image
 
 
-class ImageProfileSerializer(serializers.ModelSerializer):
+class ImageProfileSerializer(ModelSerializer):
 
     class Meta:
         model = Image

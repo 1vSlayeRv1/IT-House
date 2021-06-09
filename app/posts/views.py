@@ -51,7 +51,7 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+                            status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request):
         comment = Comment.objects.filter(
@@ -63,7 +63,7 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def delete(self, request):
         comment = Comment.objects.filter(
@@ -73,4 +73,4 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
             comment.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)

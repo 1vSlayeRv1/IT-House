@@ -1,12 +1,15 @@
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 from .models import MessageToSupport
 
 
-class SupportMessageSerializer(serializers.ModelSerializer):
+class SupportMessageSerializer(ModelSerializer):
     class Meta:
         model = MessageToSupport
-        fields = ('id', 'title', 'content', 'section')
+        fields = (
+            'id', 'title', 
+            'content', 'section'
+        )
 
     def create(self, validated_data):
         message = MessageToSupport.objects.create(

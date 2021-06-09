@@ -38,23 +38,58 @@ class UserManager(BaseUserManager):
 
 
 class Profile(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(db_index=True, max_length=255, unique=True)
-    email = models.EmailField(db_index=True, unique=True)
-    firstname = models.CharField(max_length=100, null=True, blank=True,
-                                 verbose_name='Имя')
-    lastname = models.CharField(max_length=100, null=True, blank=True,
-                                verbose_name='Фамилия')
-    phone = models.CharField(max_length=15, null=True,
-                             blank=True, verbose_name='телефон')
+    username = models.CharField(
+        db_index=True, 
+        max_length=255, 
+        unique=True)
+
+    email = models.EmailField(
+        db_index=True, 
+        unique=True)
+
+    firstname = models.CharField(
+        max_length=100, 
+        null=True, 
+        blank=True,
+        verbose_name='Имя')
+
+    lastname = models.CharField(
+        max_length=100, 
+        null=True, 
+        blank=True,
+        verbose_name='Фамилия')
+    phone = models.CharField(
+        max_length=15, 
+        null=True,
+        blank=True, 
+        verbose_name='телефон')
+
     age = models.SmallIntegerField(
-        null=True, blank=True, verbose_name='возраст')
+        null=True, 
+        blank=True, 
+        verbose_name='возраст')
+
     work_exp = models.SmallIntegerField(
-        null=True, blank=True, verbose_name='опыт работы')
+        null=True, 
+        blank=True, 
+        verbose_name='опыт работы')
+
     knowledge = models.TextField(
-        max_length=3000, null=True, blank=True, verbose_name='знания')
+        max_length=3000, 
+        null=True, 
+        blank=True, 
+        verbose_name='знания')
+
     role = models.ForeignKey(
-        'Role', null=True, blank=True, on_delete=models.CASCADE)
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+        'Role', 
+        null=True, 
+        blank=True, 
+        on_delete=models.CASCADE)
+
+    uuid = models.UUIDField(
+        default=uuid.uuid4, 
+        editable=False)
+        
     is_active = models.BooleanField(default=True)
 
     is_staff = models.BooleanField(default=False)
@@ -84,8 +119,11 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 
 
 class FieldOfInterest(models.Model):
-    field = models.CharField(max_length=100, null=False,
-                             blank=False, verbose_name='сфера интереса')
+    field = models.CharField(
+        max_length=100, 
+        null=False,
+        blank=False, 
+        verbose_name='сфера интереса')
 
     def __str__(self):
         return self.field
@@ -96,7 +134,10 @@ class FieldOfInterest(models.Model):
 
 
 class Role(models.Model):
-    role = models.CharField(max_length=100, null=False, blank=False)
+    role = models.CharField(
+        max_length=100, 
+        null=False, 
+        blank=False)
 
     def __str__(self):
         return self.role

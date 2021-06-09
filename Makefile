@@ -15,6 +15,8 @@ build:
 docker:
 	sudo docker-compose build
 	sudo docker-compose up
+testd:
+	sudo docker-compose exec web python3 manage.py test
 redis:
 	redis-server
 celery:
@@ -22,4 +24,4 @@ celery:
 	. venv/bin/activate; \
 	cd app; \
 	celery --app=ItHouse.celery worker; \
-	) 
+	)
