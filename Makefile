@@ -22,4 +22,4 @@ celery:
 	. venv/bin/activate; \
 	cd app; \
 	celery --app=ItHouse.celery worker; \
-	)
+	) 
