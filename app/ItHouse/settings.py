@@ -24,12 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_random_secret_key()
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS')
 AUTH_USER_MODEL = 'profiles.Profile'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -73,6 +73,7 @@ TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:
   del REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES']
 
+#email settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
@@ -83,16 +84,12 @@ EMAIL_USE_SSL = False
 
 REDIS_HOST = '127.0.0.1'
 REDIS_PORT = '6379'
+
 # CELERY settings
-
 CELERY_BROKER_TRANSPORT_OPTION = {'visibility_timeout': 3600}
-
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-#CELERY_BROKER_URL='redis://redis:6379'
-#CELERY_RESULT_BACKEND='redis://redis:6379'
-#if local
 BROKER_TRANSPORT = "redis"
 CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
@@ -163,12 +160,12 @@ WSGI_APPLICATION = 'ItHouse.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'itdb',
-        'USER': 'slayer',
-        'PASSWORD': '1111',
+        'ENGINE': os.getenv('SQL_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.getenv('SQL_DATABASE', 'itdb'),
+        'USER': os.getenv('SQL_USER', 'slayer'),
+        'PASSWORD': os.getenv('SQL_PASSWORD', '1111'),
         'HOST': os.getenv('SQL_HOST', 'localhost'),
-        'PORT': '',
+        'PORT': os.getenv('SQL_PORT', '5432'),
     }
 }
 
