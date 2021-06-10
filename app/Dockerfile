@@ -1,4 +1,3 @@
-# образ на основе которого создаём контейнер
 FROM python:3.9.4
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1

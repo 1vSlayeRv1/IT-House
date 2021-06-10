@@ -21,7 +21,7 @@ class AuthTest(TestCase):
 
     def test_create_user_invalid(self):
         usernames = ['askdlasklda@sadas', '!sasad12421sad$!@$',
-                     'sal!$!@<sda', '010141240212041', 'slayer']
+                     'sAl!$!@<sda', '010141240212041', 'slayer']
         emails = ['slayer@kek.', 'slayer@k', 'slayer.kek', 'sl@k']
         passwords = ['132', 'slayer', 'kek', '1',
                      '', '12941294821921', 'asasasasasasas']
