@@ -12,7 +12,7 @@ services:
         - db
         - redis
     env_file:
-        - ./env.dev
+        - ./.env.dev
   db:
     image: postgres:13.2
     volumes:
@@ -34,6 +34,6 @@ services:
       - db
       - web
     env_file:
-      - ./env.dev
+      - ./.env.dev
 volumes:
   postgres_data:
