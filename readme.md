@@ -7,17 +7,17 @@
 Для запуска тестов, запустите docker и выполните: <br>
 <code>make testd</code> <br>
 Для запуска докера с применением миграций: <br>
-<code>make dockerm</code> <br>
+<code>make dockerm</code> <br> <br>
 
 Для запуска без докера: <br>
 <code>make build</code> <br>
 либо: <br>
-<code>make run</code> Если вы уже до этого выполняли <code>make build</code> <br>
-Затем:
+<code>make run</code> (если вы уже до этого выполняли <code>make build</code> ) <br>
+Затем: <br>
 <code>make redis</code> <br>
 <code>make celery</code> <br>
 
-Для запуска вручную: <br>
+Для запуска докера вручную: <br>
 <code>sudo docker-compose build </code> <br>
 <code>sudo docker-compose up</code> <br>
 
