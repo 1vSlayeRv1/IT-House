@@ -2,7 +2,6 @@
 
 from django.conf import settings
 from django.db import migrations, models
-import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -11,13 +10,13 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('posts', '0001_initial'),
+        ('events', '0002_auto_20210610_1251'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='comment',
+            model_name='event',
             name='profile',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(blank=True, related_name='profile_event', to=settings.AUTH_USER_MODEL),
         ),
     ]
