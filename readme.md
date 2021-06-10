@@ -4,12 +4,11 @@
 <code>EMAIL_HOST_PASSWORD='ваш_пароль'</code> <br>
 Для запуска с помощью docker-compose собрать проект с помощью makefile: <br>
 <code>make docker</code> <br>
-
-Для запуска тестов, запустите docker и выполните:
+Для запуска тестов, запустите docker и выполните: <br>
 <code>make testd</code> <br>
-
 Для запуска докера с применением миграций: <br>
 <code>make dockerm</code> <br>
+
 Для запуска без докера: <br>
 <code>make build</code> <br>
 либо: <br>
