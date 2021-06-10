@@ -69,3 +69,6 @@ class Office(models.Model):
     class Meta:
         verbose_name = 'Офис'
         verbose_name_plural = 'Офисы'
+
+    def __str__(self):
+        return self.name

@@ -32,6 +32,9 @@ class Post(models.Model):
         verbose_name_plural = 'Посты'
         ordering = ['-date']
 
+    def __str__(self):
+        return self.title
+
 
 class Comment(models.Model):
     comment = models.CharField(
@@ -62,3 +65,6 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
         ordering = ['-date']
+
+    def __str__(self):
+        return self.comment
