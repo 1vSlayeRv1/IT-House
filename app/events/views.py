@@ -30,7 +30,7 @@ class RetrieveUpdateDestroyEventsAPI(APIView):
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError('Event validation rrror')
+                raise ValidationError('Event validation error')
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
