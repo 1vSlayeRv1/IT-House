@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Event, Office
-from images.models import Image
 from django.utils.safestring import mark_safe
+
+from .models import Event, Office
 
 
 class ProfileEventAdmin(admin.TabularInline):

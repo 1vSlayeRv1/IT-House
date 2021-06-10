@@ -1,8 +1,9 @@
 import jwt
-from django.test import TestCase
 from django.conf import settings
-from rest_framework_jwt.utils import jwt_payload_handler
 from django.contrib.auth import get_user_model
+from django.test import TestCase
+from rest_framework_jwt.utils import jwt_payload_handler
+
 from .models import SupportSection
 
 
@@ -47,7 +48,8 @@ class CreateSupportTest(TestCase):
         with open('tests/101563.jpg', 'rb') as file:
             resp = self.client.post(
                 '/api/support/',
-                {'title': 'kek', 'content': 'lol', 'section': 999, 'file': file},
+                {'title': 'kek', 'content': 'lol',
+                    'section': 999, 'file': file},
                 **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'})
         self.assertEqual(resp.status_code, 400)
 

@@ -1,13 +1,16 @@
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.db.models import signals
 import uuid
-from .tasks import send_hello_email
+
+from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
+                                        PermissionsMixin)
+from django.db import models
+
+
 class UserManager(BaseUserManager):
     """
-    Django требует, чтобы кастомные пользователи определяли свой собственный
-    класс Manager. Унаследовавшись от BaseUserManager, мы получаем много того
-    же самого кода, который Django использовал для создания User (для демонстрации).
+    Django требует, чтобы кастомные пользователи определяли
+    свой собственный класс Manager. Унаследовавшись от
+    BaseUserManager, мы получаем много того же самого кода,
+    который Django использовал для создания User (для демонстрации).
     """
 
     def create_user(self, username, email, password=None):
@@ -21,7 +24,7 @@ class UserManager(BaseUserManager):
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
         user.save()
- 
+
         return user
 
     def create_superuser(self, username, email, password):
@@ -33,63 +36,63 @@ class UserManager(BaseUserManager):
         user.is_superuser = True
         user.is_staff = True
         user.save()
-        
+
         return user
 
 
 class Profile(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
-        db_index=True, 
-        max_length=255, 
+        db_index=True,
+        max_length=255,
         unique=True)
 
     email = models.EmailField(
-        db_index=True, 
+        db_index=True,
         unique=True)
 
     firstname = models.CharField(
-        max_length=100, 
-        null=True, 
+        max_length=100,
+        null=True,
         blank=True,
         verbose_name='Имя')
 
     lastname = models.CharField(
-        max_length=100, 
-        null=True, 
+        max_length=100,
+        null=True,
         blank=True,
         verbose_name='Фамилия')
     phone = models.CharField(
-        max_length=15, 
+        max_length=15,
         null=True,
-        blank=True, 
+        blank=True,
         verbose_name='телефон')
 
     age = models.SmallIntegerField(
-        null=True, 
-        blank=True, 
+        null=True,
+        blank=True,
         verbose_name='возраст')
 
     work_exp = models.SmallIntegerField(
-        null=True, 
-        blank=True, 
+        null=True,
+        blank=True,
         verbose_name='опыт работы')
 
     knowledge = models.TextField(
-        max_length=3000, 
-        null=True, 
-        blank=True, 
+        max_length=3000,
+        null=True,
+        blank=True,
         verbose_name='знания')
 
     role = models.ForeignKey(
-        'Role', 
-        null=True, 
-        blank=True, 
+        'Role',
+        null=True,
+        blank=True,
         on_delete=models.CASCADE)
 
     uuid = models.UUIDField(
-        default=uuid.uuid4, 
+        default=uuid.uuid4,
         editable=False)
-        
+
     is_active = models.BooleanField(default=True)
 
     is_staff = models.BooleanField(default=False)
@@ -120,9 +123,9 @@ class Profile(AbstractBaseUser, PermissionsMixin):
 
 class FieldOfInterest(models.Model):
     field = models.CharField(
-        max_length=100, 
+        max_length=100,
         null=False,
-        blank=False, 
+        blank=False,
         verbose_name='сфера интереса')
 
     def __str__(self):
@@ -135,8 +138,8 @@ class FieldOfInterest(models.Model):
 
 class Role(models.Model):
     role = models.CharField(
-        max_length=100, 
-        null=False, 
+        max_length=100,
+        null=False,
         blank=False)
 
     def __str__(self):

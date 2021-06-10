@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import ListPosts, ListDetailPosts, CreateUpdateDestroyComments
 
+from .views import CreateUpdateDestroyComments, ListDetailPosts, ListPosts
 
 urlpatterns = [
     path('<int:pk>', ListDetailPosts.as_view(), name='open_post'),

@@ -7,7 +7,7 @@ class SupportMessageSerializer(ModelSerializer):
     class Meta:
         model = MessageToSupport
         fields = (
-            'id', 'title', 
+            'id', 'title',
             'content', 'section'
         )
 

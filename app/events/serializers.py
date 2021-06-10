@@ -1,7 +1,7 @@
-from rest_framework.exceptions import ValidationError
 from events.models import Event
-from rest_framework.serializers import ModelSerializer, StringRelatedField
 from images.models import Image
+from rest_framework.exceptions import ValidationError
+from rest_framework.serializers import ModelSerializer, StringRelatedField
 
 
 class ImageEventSerializer(ModelSerializer):
@@ -15,6 +15,7 @@ class ImageEventSerializer(ModelSerializer):
 class EventSerializer(ModelSerializer):
     file = ImageEventSerializer(read_only=True)
     office = StringRelatedField(source='office.address', read_only=True)
+
     class Meta:
         model = Event
         fields = (

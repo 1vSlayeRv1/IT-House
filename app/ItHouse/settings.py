@@ -10,12 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
+import datetime
 import os
 import sys
-import datetime
-from re import M
+from pathlib import Path
+
 from django.core.management.utils import get_random_secret_key
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,7 +74,8 @@ TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 if TESTING:
   del REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES']
 
-#email settings
+# email settings
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
@@ -91,8 +93,12 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 BROKER_TRANSPORT = "redis"
-CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
-CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND',
+                                  'redis://' + REDIS_HOST +
+                                  ':' + REDIS_PORT + '/0')
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL',
+                              'redis://' + REDIS_HOST +
+                              ':' + REDIS_PORT + '/0')
 
 JWT_AUTH = {
 
@@ -160,7 +166,8 @@ WSGI_APPLICATION = 'ItHouse.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('SQL_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'ENGINE': os.getenv('SQL_ENGINE',
+                            'django.db.backends.postgresql_psycopg2'),
         'NAME': os.getenv('SQL_DATABASE', 'itdb'),
         'USER': os.getenv('SQL_USER', 'slayer'),
         'PASSWORD': os.getenv('SQL_PASSWORD', '1111'),

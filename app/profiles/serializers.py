@@ -1,9 +1,10 @@
-from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
-from rest_framework.validators import UniqueValidator
-from rest_framework.serializers import ModelSerializer, EmailField, CharField, ValidationError
-from posts.serializers import ImageFileSerializer
+from django.contrib.auth.password_validation import validate_password
 from events.models import Event
+from posts.serializers import ImageFileSerializer
+from rest_framework.serializers import (CharField, EmailField, ModelSerializer,
+                                        ValidationError)
+from rest_framework.validators import UniqueValidator
 
 
 class UserSerializer(ModelSerializer):
@@ -13,14 +14,14 @@ class UserSerializer(ModelSerializer):
         validators=[UniqueValidator(queryset=User.objects.all())])
 
     password = CharField(write_only=True, required=True,
-                                     validators=[validate_password])
+                         validators=[validate_password])
     password_repeat = CharField(write_only=True, required=True)
 
     class Meta:
         model = get_user_model()
         fields = [
-            'id', 'username', 
-            'password', 'password_repeat', 
+            'id', 'username',
+            'password', 'password_repeat',
             'email'
         ]
 
@@ -57,10 +58,10 @@ class ListProfileSerializer(ModelSerializer):
         model = get_user_model()
         fields = (
             'id', 'username',
-            'email', 'firstname', 
-            'lastname', 'phone', 
-            'age', 'work_exp', 
-            'knowledge', 'role', 
+            'email', 'firstname',
+            'lastname', 'phone',
+            'age', 'work_exp',
+            'knowledge', 'role',
             'profile_image', 'profile_event'
         )
 
@@ -70,9 +71,9 @@ class UpdateProfileSerializer(ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = (
-            'id', 'firstname', 
-            'lastname', 'phone', 
-            'age', 'work_exp', 
+            'id', 'firstname',
+            'lastname', 'phone',
+            'age', 'work_exp',
             'knowledge', 'role')
 
     def update(self, instance, validated_data):
@@ -85,8 +86,8 @@ class UpdateProfileSerializer(ModelSerializer):
         instance.role = validated_data['role']
         instance.save(
             update_fields=[
-                'firstname', 'lastname', 
-                'phone', 'age', 
-                'work_exp', 'knowledge', 
+                'firstname', 'lastname',
+                'phone', 'age',
+                'work_exp', 'knowledge',
                 'role'])
         return instance

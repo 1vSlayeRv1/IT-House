@@ -1,8 +1,7 @@
-from django.core.exceptions import ValidationError
 import jwt
-from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.test import TestCase
 from rest_framework_jwt.utils import jwt_payload_handler
 
 

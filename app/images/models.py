@@ -1,32 +1,32 @@
 from django.db import models
-
 from images.helpers import resize_logo
-from profiles.models import Profile
 from posts.models import Post
+from profiles.models import Profile
 from support.models import MessageToSupport
+
 from .utilities import get_timestamp_path
 
 
 class Image(models.Model):
     file = models.ImageField(
-        blank=True, 
+        blank=True,
         null=True,
         verbose_name='изображение',
         upload_to=get_timestamp_path)
 
     profile = models.ManyToManyField(
-        Profile, 
-        blank=True, 
+        Profile,
+        blank=True,
         related_name='profile_image')
 
     post = models.ManyToManyField(
-        Post, 
-        blank=True, 
+        Post,
+        blank=True,
         related_name='post_image')
 
     support = models.ManyToManyField(
-        MessageToSupport, 
-        blank=True, 
+        MessageToSupport,
+        blank=True,
         related_name='support_image')
 
     def save(self, *args, **kwargs):

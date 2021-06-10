@@ -1,9 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-
 from images.models import Image
-from .models import Profile, Role, FieldOfInterest
 
+from .models import FieldOfInterest, Profile, Role
 
 
 class EventProfileAdmin(admin.TabularInline):

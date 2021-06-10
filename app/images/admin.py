@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Image
 from django.utils.safestring import mark_safe
+
+from .models import Image
 
 
 class ImageAdmin(admin.ModelAdmin):

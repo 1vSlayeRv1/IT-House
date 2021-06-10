@@ -1,14 +1,16 @@
 import jwt
-from django.core.exceptions import ValidationError
 from django.conf import settings
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.generics import ListAPIView
-from rest_framework_jwt.utils import jwt_payload_handler
-from rest_framework import status
-from .serializers import UserSerializer, ListProfileSerializer, UpdateProfileSerializer
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from rest_framework import status
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_jwt.utils import jwt_payload_handler
+
+from .serializers import (ListProfileSerializer, UpdateProfileSerializer,
+                          UserSerializer)
 from .tasks import send_hello_email
 
 User = get_user_model()

@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Post,  Comment
 from django.utils.safestring import mark_safe
 from images.models import Image
+
+from .models import Comment, Post
 
 
 class ImagesInline(admin.TabularInline):

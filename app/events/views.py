@@ -1,12 +1,13 @@
-from rest_framework.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 from .models import Event
 from .serializers import EventAddSerializer, EventSerializer
-from django.contrib.auth import get_user_model
 
 
 class ListEventsAPI(ListAPIView):

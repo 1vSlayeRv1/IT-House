@@ -1,12 +1,14 @@
-import jwt
 from datetime import datetime
-from django.test import TestCase
-from django.contrib.auth import get_user_model
-from rest_framework_jwt.utils import jwt_payload_handler
-from django.conf import settings
-from .models import Event
-from images.models import Image
+
+import jwt
 import pytz
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.test import TestCase
+from images.models import Image
+from rest_framework_jwt.utils import jwt_payload_handler
+
+from .models import Event
 
 
 class EventsTest(TestCase):

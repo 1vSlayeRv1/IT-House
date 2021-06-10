@@ -1,9 +1,9 @@
+import jwt
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from posts.models import Post
-import jwt
-from django.contrib.auth import get_user_model
 from rest_framework_jwt.utils import jwt_payload_handler
-from django.conf import settings
 
 
 class PostTest(TestCase):

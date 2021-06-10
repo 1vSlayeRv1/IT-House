@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
+from rest_framework import mixins, status, views
 from rest_framework.generics import ListAPIView
-from rest_framework import mixins, views, status
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from .models import Post, Comment
-from .serializers import CommentSerializer, PostSerializer, PostWithCommentsSerializer
+
+from .models import Comment, Post
+from .serializers import (CommentSerializer, PostSerializer,
+                          PostWithCommentsSerializer)
 
 User = get_user_model()
 
@@ -61,7 +63,8 @@ class CreateUpdateDestroyComments(mixins.CreateModelMixin,
             serializer = CommentSerializer(comment, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(
+                    serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
