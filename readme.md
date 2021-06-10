@@ -3,9 +3,21 @@
 <code>EMAIL_HOST_USER='ваш_google'</code> <br>
 <code>EMAIL_HOST_PASSWORD='ваш_пароль'</code> <br>
 Для запуска с помощью docker-compose собрать проект с помощью makefile: <br>
-<code>make docker</code>
+<code>make docker</code> <br>
+Для запуска тестов, запустите docker и выполните: <br>
+<code>make testd</code> <br>
+Для запуска докера с применением миграций: <br>
+<code>make dockerm</code> <br> <br>
 
-Для запуска вручную: <br>
+Для запуска без докера: <br>
+<code>make build</code> <br>
+либо: <br>
+<code>make run</code> (если вы уже до этого выполняли <code>make build</code> ) <br>
+Затем: <br>
+<code>make redis</code> <br>
+<code>make celery</code> <br>
+
+Для запуска докера вручную: <br>
 <code>sudo docker-compose build </code> <br>
 <code>sudo docker-compose up</code> <br>
 
