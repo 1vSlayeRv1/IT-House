@@ -72,7 +72,7 @@ REST_FRAMEWORK = {
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
 
 if TESTING:
-  del REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES']
+    del REST_FRAMEWORK['DEFAULT_THROTTLE_CLASSES']
 
 # email settings
 
@@ -183,9 +183,12 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+        'django.contrib.auth.password_validation.'
+        'UserAttributeSimilarityValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.'
+             'MinimumLengthValidator', },
+    {'NAME': 'django.contrib.auth.password_validation.'
+             'CommonPasswordValidator', },
     {'NAME': 'profiles.validators.NumberValidator',
         'OPTIONS': {
             'min_digits': 2, }},
