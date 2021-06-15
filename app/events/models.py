@@ -1,4 +1,5 @@
 from django.db import models
+
 from images.models import Image
 from profiles.models import Profile
 

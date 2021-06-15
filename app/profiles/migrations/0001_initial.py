@@ -3,8 +3,9 @@
 import uuid
 
 import django.db.models.deletion
-import images.utilities
 from django.db import migrations, models
+
+import images.utilities
 
 
 class Migration(migrations.Migration):

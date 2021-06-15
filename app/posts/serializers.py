@@ -1,7 +1,9 @@
-from images.models import Image
-from profiles.models import Profile
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer, StringRelatedField
+
+from images.models import Image
+from profiles.models import Profile
 
 from .models import Comment, Post
 
@@ -53,10 +55,19 @@ class ProfileImageSerializer(ModelSerializer):
         read_only_fields = fields
 
 
+class LimitedListSerializer(serializers.ListSerializer):
+
+    def to_representation(self, data):
+        data = data.all()[self.context['offset']:(
+            self.context['offset']+self.context['comments'])]
+        return super(LimitedListSerializer, self).to_representation(data)
+
+
 class CommentImageSerializer(ModelSerializer):
     profile = ProfileImageSerializer(read_only=True)
 
     class Meta:
+        list_serializer_class = LimitedListSerializer
         model = Comment
         fields = ('id', 'comment', 'date', 'profile', 'post')
         read_only_fields = fields
