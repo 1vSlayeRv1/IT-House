@@ -6,8 +6,6 @@
 <code>make docker</code> <br>
 Для запуска тестов, запустите docker и выполните: <br>
 <code>make testd</code> <br>
-Для запуска докера с применением миграций: <br>
-<code>make dockerm</code> <br> <br>
 
 Для запуска без докера: <br>
 <code>make build</code> <br>

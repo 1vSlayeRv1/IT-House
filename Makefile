@@ -15,10 +15,6 @@ build:
 docker:
 	sudo docker-compose build
 	sudo docker-compose up
-dockerm:
-	sudo docker-compose build
-	sudo docker-compose exec web python3 manage.py migrate
-	sudo docker-compose up
 testd:
 	sudo docker-compose exec web python3 manage.py test
 redis:

@@ -34,20 +34,23 @@ class CommentSerializer(ModelSerializer):
         return instance
 
 
-class ImageFileSerializer(ModelSerializer):
+class PostImageSerializer(ModelSerializer):
     file = StringRelatedField(source='file.url', read_only=True)
 
     class Meta:
         model = Image
         fields = ('file', )
+        read_only_fields = fields
 
 
 class ProfileImageSerializer(ModelSerializer):
-    profile_image = ImageFileSerializer(read_only=True, many=True)
+    avatar = StringRelatedField(
+        source='avatar.url', read_only=True)
 
     class Meta:
         model = Profile
-        fields = ('id', 'profile_image')
+        fields = ('id', 'avatar')
+        read_only_fields = fields
 
 
 class CommentImageSerializer(ModelSerializer):
@@ -56,17 +59,18 @@ class CommentImageSerializer(ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'comment', 'date', 'profile', 'post')
+        read_only_fields = fields
 
 
 class PostWithCommentsSerializer(ModelSerializer):
-
     comments = CommentImageSerializer(many=True, read_only=True)
-    post_image = ImageFileSerializer(read_only=True, many=True)
+    post_image = PostImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
         fields = ('id', 'title', 'description', 'content',
                   'post_image', 'date', 'comments')
+        read_only_fields = fields
 
 
 class PostSerializer(ModelSerializer):

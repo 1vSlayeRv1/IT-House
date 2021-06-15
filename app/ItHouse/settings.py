@@ -125,7 +125,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_cleanup',
     'drf_yasg',
-    #  'silk'
+   # 'silk'
 ]
 
 MIDDLEWARE = [
@@ -134,7 +134,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    #   'silk.middleware.SilkyMiddleware',
+  #  'silk.middleware.SilkyMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

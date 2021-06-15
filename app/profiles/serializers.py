@@ -1,10 +1,21 @@
+from rest_framework import serializers
+from images.models import Image
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from events.models import Event
-from posts.serializers import ImageFileSerializer
 from rest_framework.serializers import (CharField, EmailField, ModelSerializer,
                                         ValidationError)
 from rest_framework.validators import UniqueValidator
+
+Profile = get_user_model()
+
+
+class ImageFileSerializer(ModelSerializer):
+    file = serializers.StringRelatedField(source='file.url')
+
+    class Meta:
+        model = Image
+        fields = ('file',)
 
 
 class UserSerializer(ModelSerializer):
@@ -90,4 +101,20 @@ class UpdateProfileSerializer(ModelSerializer):
                 'phone', 'age',
                 'work_exp', 'knowledge',
                 'role'])
+        return instance
+
+
+class ImageProfileSerializer(ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ('avatar', )
+
+    def create(self, instance, validated_data):
+        instance.avatar = validated_data['avatar']
+        instance.save(
+            update_fields=[
+                'avatar'
+            ]
+        )
         return instance

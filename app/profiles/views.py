@@ -3,14 +3,16 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from rest_framework import status
+from rest_framework import mixins, views
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_jwt.utils import jwt_payload_handler
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from .serializers import (ListProfileSerializer, UpdateProfileSerializer,
-                          UserSerializer)
+                          UserSerializer, ImageProfileSerializer)
 from .tasks import send_hello_email
 
 User = get_user_model()
@@ -63,3 +65,20 @@ class ListCreateProfileAPI(ListAPIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+
+
+class ProfileAvatarUploadView(mixins.CreateModelMixin, views.APIView):
+    permission_classes = (IsAuthenticated, )
+    parser_classes = [MultiPartParser, FormParser]
+    throttle_scope = 'imageupload'
+
+    def post(self, request):
+        profile = User.objects.get(pk=request.user.pk)
+        serializer = ImageProfileSerializer(profile,
+                                            data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)

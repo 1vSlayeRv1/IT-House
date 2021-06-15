@@ -1,5 +1,11 @@
+import jwt
+
 from django.test import TestCase
 from django.urls import reverse
+from django.conf import settings
+from rest_framework_jwt.utils import jwt_payload_handler
+from django.test.client import MULTIPART_CONTENT
+from django.contrib.auth import get_user_model
 
 
 class AuthTest(TestCase):
@@ -47,3 +53,23 @@ class AuthTest(TestCase):
                     'password': f'{p}'
                 })
         self.assertEqual(resp.status_code, 400)
+
+
+class UploadAvatar(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        user = get_user_model()
+        user = user.objects.create(email='slayer@kek.lol',
+                            username='slayer', password='keklol123123')
+        payload = jwt_payload_handler(user)
+        cls.token = jwt.encode(payload, settings.SECRET_KEY).decode(
+            'unicode_escape')
+
+    def test_upload_image(self):
+
+        with open('tests/101563.jpg', 'rb') as file:
+            resp = self.client.post(
+                '/api/profile/avatar/',
+                {'avatar': file},
+                **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'})
+        self.assertEqual(resp.status_code, 201)
