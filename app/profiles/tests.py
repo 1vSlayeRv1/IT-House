@@ -1,11 +1,9 @@
 import jwt
-
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
-from django.conf import settings
 from rest_framework_jwt.utils import jwt_payload_handler
-from django.test.client import MULTIPART_CONTENT
-from django.contrib.auth import get_user_model
 
 
 class AuthTest(TestCase):
@@ -60,7 +58,7 @@ class UploadAvatar(TestCase):
     def setUpTestData(cls):
         user = get_user_model()
         user = user.objects.create(email='slayer@kek.lol',
-                            username='slayer', password='keklol123123')
+                                   username='slayer', password='keklol123123')
         payload = jwt_payload_handler(user)
         cls.token = jwt.encode(payload, settings.SECRET_KEY).decode(
             'unicode_escape')
