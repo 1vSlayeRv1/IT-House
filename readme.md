@@ -2,6 +2,10 @@
 Для начала напишите свою google почту и пароль в файл env.dev <br>
 <code>EMAIL_HOST_USER='ваш_google'</code> <br>
 <code>EMAIL_HOST_PASSWORD='ваш_пароль'</code> <br>
+А также дайте разрешение аккаунту для сторонних приложений: <br>
+https://myaccount.google.com/lesssecureapps <br>
+Все письма будут отправляться о регистрации на мой email, в продакшене нужно будет поменять<br>
+на почту, которая указывается при создании аккаунта <br> <br>
 Для запуска с помощью docker-compose собрать проект с помощью makefile: <br>
 <code>make docker</code> <br>
 Для запуска тестов, запустите docker и выполните: <br>
