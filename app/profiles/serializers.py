@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from events.models import Event
+from images.models import Image
 from rest_framework import serializers
 from rest_framework.serializers import (CharField, EmailField, ModelSerializer,
                                         ValidationError)
 from rest_framework.validators import UniqueValidator
-
-from events.models import Event
-from images.models import Image
 
 Profile = get_user_model()
 

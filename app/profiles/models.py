@@ -3,7 +3,6 @@ import uuid
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
-
 from images.helpers import resize_logo
 from images.utilities import get_timestamp_path
 

@@ -1,8 +1,7 @@
-from rest_framework.exceptions import ValidationError
-from rest_framework.serializers import ModelSerializer, StringRelatedField
-
 from events.models import Event
 from images.models import Image
+from rest_framework.exceptions import ValidationError
+from rest_framework.serializers import ModelSerializer, StringRelatedField
 
 
 class ImageEventSerializer(ModelSerializer):

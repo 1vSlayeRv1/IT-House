@@ -1,9 +1,17 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import MessageToSupport
+from .models import MessageToSupport, SupportSection
+
+
+class SupportSectionSerializer(ModelSerializer):
+
+    class Meta:
+        model = SupportSection
+        fields = ('id', 'section')
 
 
 class SupportMessageSerializer(ModelSerializer):
+
     class Meta:
         model = MessageToSupport
         fields = (
