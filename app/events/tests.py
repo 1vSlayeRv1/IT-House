@@ -5,8 +5,9 @@ import pytz
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from images.models import Image
 from rest_framework_jwt.utils import jwt_payload_handler
+
+from images.models import Image
 
 from .models import Event
 

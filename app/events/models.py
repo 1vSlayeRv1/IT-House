@@ -1,6 +1,8 @@
 from django.db import models
+
 from images.models import Image
 from profiles.models import Profile
+from profiles.tasks import send_hello_email
 
 
 class Event(models.Model):
@@ -39,10 +41,11 @@ class Event(models.Model):
         blank=True,
         verbose_name='изображение')
 
-    profile = models.ManyToManyField(
+    registration = models.ManyToManyField(
         Profile,
         blank=True,
-        related_name='profile_event')
+        through='EventGroup',
+        related_name='eventsgroups')
 
     def __str__(self):
         return self.name
@@ -72,3 +75,29 @@ class Office(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class EventGroup(models.Model):
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    STATUS_CHOICES = [
+        ('Wait', 'Wait'),
+        ('Access', 'Access')
+    ]
+    status = models.CharField(
+        max_length=50,
+        choices=STATUS_CHOICES,
+        default=STATUS_CHOICES[0][0])
+
+    def __str__(self):
+        return self.event.name
+
+    def save(self):
+        if self.status == 'Access':
+            send_hello_email(self.profile.pk)
+        super().save()
+
+    class Meta:
+        verbose_name = 'Событие с набором участников'
+        verbose_name_plural = 'События с подтвержденными участниками'

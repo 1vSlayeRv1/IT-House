@@ -4,17 +4,12 @@ from django.utils.safestring import mark_safe
 from .models import FieldOfInterest, Profile, Role
 
 
-class EventProfileAdmin(admin.TabularInline):
-    model = Profile.profile_event.through
-
-
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('id', 'username', 'firstname',
                     'lastname', 'email', 'created_at')
     list_diplay_links = ('user',)
     search_fields = ('user', 'email')
     readonly_fields = ['preview']
-    inlines = (EventProfileAdmin,)
 
     def preview(self, obj):
         return mark_safe(
