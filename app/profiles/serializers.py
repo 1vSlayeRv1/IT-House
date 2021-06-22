@@ -58,9 +58,12 @@ class UserSerializer(ModelSerializer):
 
 
 class EventProfileSerializer(ModelSerializer):
+    id = serializers.StringRelatedField(source='event.id')
+    event = serializers.StringRelatedField(source='event.name')
+    
     class Meta:
         model = EventGroup
-        fields = ('event', 'status')
+        fields = ('id','event', 'status')
 
 
 class ListProfileSerializer(ModelSerializer):
