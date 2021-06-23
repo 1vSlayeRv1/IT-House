@@ -1,7 +1,6 @@
 from django.db import models
-from images.helpers import resize_logo
+from images.helpers import resize_image
 from posts.models import Post
-from profiles.models import Profile
 from support.models import MessageToSupport
 
 from .utilities import get_timestamp_path
@@ -13,11 +12,6 @@ class Image(models.Model):
         null=True,
         verbose_name='изображение',
         upload_to=get_timestamp_path)
-
-    profile = models.ManyToManyField(
-        Profile,
-        blank=True,
-        related_name='profile_image')
 
     post = models.ManyToManyField(
         Post,
@@ -33,7 +27,7 @@ class Image(models.Model):
         super(Image, self).save(*args, **kwargs)
 
         if self.file:
-            resize_logo(self)
+            resize_image(self)
 
     def delete(self, *args, **kwargs):
         # You have to prepare what you need before delete the model

@@ -6,7 +6,7 @@ from .models import Image
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'file', 'mini_preview')
-    fields = ('file', 'preview', 'profile', 'post', 'support')
+    fields = ('file', 'preview', 'post', 'support')
     readonly_fields = ['preview', 'mini_preview']
 
     def mini_preview(self, obj):

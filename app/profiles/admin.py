@@ -1,20 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from images.models import Image
 
 from .models import FieldOfInterest, Profile, Role
-
-
-class EventProfileAdmin(admin.TabularInline):
-    model = Profile.profile_event.through
-
-
-class ProfileImageAdmin(admin.TabularInline):
-    model = Image.profile.through
-    readonly_fields = ['preview']
-
-    def preview(self, obj):
-        return mark_safe(f'<img src="{obj.image}" style="max-height: 200px;">')
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -22,7 +9,11 @@ class ProfileAdmin(admin.ModelAdmin):
                     'lastname', 'email', 'created_at')
     list_diplay_links = ('user',)
     search_fields = ('user', 'email')
-    inlines = (EventProfileAdmin, ProfileImageAdmin)
+    readonly_fields = ['preview']
+
+    def preview(self, obj):
+        return mark_safe(
+            f'<img src="{obj.avatar.url}" style="max-height: 200px;">')
 
 
 admin.site.register(Profile, ProfileAdmin)

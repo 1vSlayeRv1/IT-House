@@ -5,7 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import SupportMessageSerializer
+from .models import SupportSection
+from .serializers import SupportMessageSerializer, SupportSectionSerializer
 
 
 class CreateMessageAPI(APIView):
@@ -13,6 +14,11 @@ class CreateMessageAPI(APIView):
     serializer_class = SupportMessageSerializer
     parser_classes = [MultiPartParser, FormParser]
     throttle_scope = 'support'
+
+    def get(self, request):
+        queryset = SupportSection.objects.all()
+        serializer = SupportSectionSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         serializer = SupportMessageSerializer(

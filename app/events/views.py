@@ -39,7 +39,7 @@ class RetrieveUpdateDestroyEventsAPI(APIView):
         if event:
             user = get_user_model()
             user = user.objects.get(pk=request.user.pk)
-            user.profile_event.remove(event)
+            user.eventsgroups.remove(event)
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)

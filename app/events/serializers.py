@@ -3,6 +3,8 @@ from images.models import Image
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 
+from .models import EventGroup
+
 
 class ImageEventSerializer(ModelSerializer):
     file = StringRelatedField(source='file.url', read_only=True)
@@ -32,12 +34,12 @@ class EventSerializer(ModelSerializer):
 class EventAddSerializer(ModelSerializer):
 
     class Meta:
-        model = Event.profile.through
-        fields = ('profile', )
+        model = EventGroup
+        fields = ('event', 'profile')
 
     def update(self, instance, validated_data):
         if not instance:
             raise ValidationError('Event not found!')
-        instance.profile.add(self.initial_data['profile'])
+        instance.registration.add(self.initial_data['profile'])
         instance.save()
         return instance

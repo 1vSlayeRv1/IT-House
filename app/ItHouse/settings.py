@@ -36,10 +36,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, "ItHouse", "static")
-STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-
 
 # Application definition
 
@@ -64,9 +62,9 @@ REST_FRAMEWORK = {
         'checkevents': '30/minute',
         'addevents': '5/minute',
         'profile': '20/minute',
-        'support': '1/minute'
+        'support': '10/minute'
     },
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
 
 TESTING = len(sys.argv) > 1 and sys.argv[1] == 'test'
@@ -108,6 +106,8 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'profiles.utils.jwt_response_payload_handler',
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_ALLOW_REFRESH': True,
 }
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -125,7 +125,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_cleanup',
     'drf_yasg',
-    #  'silk'
+    # 'silk'
 ]
 
 MIDDLEWARE = [
@@ -134,7 +134,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    #   'silk.middleware.SilkyMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

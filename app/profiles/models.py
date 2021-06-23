@@ -3,6 +3,8 @@ import uuid
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
+from images.helpers import resize_logo
+from images.utilities import get_timestamp_path
 
 
 class UserManager(BaseUserManager):
@@ -49,6 +51,13 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         db_index=True,
         unique=True)
+
+    avatar = models.ImageField(
+        null=True,
+        blank=True,
+        verbose_name='аватар',
+        upload_to=get_timestamp_path,
+        default='test.jpg')
 
     firstname = models.CharField(
         max_length=100,
@@ -112,6 +121,12 @@ class Profile(AbstractBaseUser, PermissionsMixin):
     # Сообщает Django, что определенный выше класс UserManager
     # должен управлять объектами этого типа.
     objects = UserManager()
+
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
+
+        if self.avatar:
+            resize_logo(self)
 
     def get_id(self):
         return self.pk

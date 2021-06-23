@@ -1,5 +1,6 @@
 from images.models import Image
 from profiles.models import Profile
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 
@@ -34,39 +35,52 @@ class CommentSerializer(ModelSerializer):
         return instance
 
 
-class ImageFileSerializer(ModelSerializer):
+class PostImageSerializer(ModelSerializer):
     file = StringRelatedField(source='file.url', read_only=True)
 
     class Meta:
         model = Image
         fields = ('file', )
+        read_only_fields = fields
 
 
 class ProfileImageSerializer(ModelSerializer):
-    profile_image = ImageFileSerializer(read_only=True, many=True)
+    avatar = StringRelatedField(
+        source='avatar.url', read_only=True)
 
     class Meta:
         model = Profile
-        fields = ('id', 'profile_image')
+        fields = ('id', 'avatar')
+        read_only_fields = fields
+
+
+class LimitedListSerializer(serializers.ListSerializer):
+
+    def to_representation(self, data):
+        data = data.all()[self.context['offset']:(
+            self.context['offset']+self.context['comments'])]
+        return super(LimitedListSerializer, self).to_representation(data)
 
 
 class CommentImageSerializer(ModelSerializer):
     profile = ProfileImageSerializer(read_only=True)
 
     class Meta:
+        list_serializer_class = LimitedListSerializer
         model = Comment
         fields = ('id', 'comment', 'date', 'profile', 'post')
+        read_only_fields = fields
 
 
 class PostWithCommentsSerializer(ModelSerializer):
-
     comments = CommentImageSerializer(many=True, read_only=True)
-    post_image = ImageFileSerializer(read_only=True, many=True)
+    post_image = PostImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
         fields = ('id', 'title', 'description', 'content',
                   'post_image', 'date', 'comments')
+        read_only_fields = fields
 
 
 class PostSerializer(ModelSerializer):

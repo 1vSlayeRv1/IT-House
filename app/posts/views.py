@@ -31,8 +31,17 @@ class ListDetailPosts(ListAPIView):
 
     def list(self, *args, **kwargs):
         queryset = self.get_queryset()
+        if self.request.GET.get('offset'):
+            offset = int(self.request.GET.get('offset'))
+        else:
+            offset = 0
+        comments = 5
         if queryset:
-            serializer = PostWithCommentsSerializer(queryset, many=True)
+            serializer = PostWithCommentsSerializer(
+                queryset,
+                many=True,
+                context={'offset': offset,
+                         'comments': comments})
             return Response(serializer.data[0])
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
