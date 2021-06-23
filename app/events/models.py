@@ -1,8 +1,7 @@
 from django.db import models
-
 from images.models import Image
 from profiles.models import Profile
-from profiles.tasks import send_hello_email
+from profiles.tasks import send_access_event_email
 
 
 class Event(models.Model):
@@ -95,7 +94,7 @@ class EventGroup(models.Model):
 
     def save(self):
         if self.status == 'Access':
-            send_hello_email(self.profile.pk)
+            send_access_event_email(self.profile.pk)
         super().save()
 
     class Meta:

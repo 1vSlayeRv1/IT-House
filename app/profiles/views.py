@@ -2,6 +2,7 @@ import jwt
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from profiles.models import Role
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.mixins import CreateModelMixin
@@ -12,7 +13,8 @@ from rest_framework.views import APIView
 from rest_framework_jwt.utils import jwt_payload_handler
 
 from .serializers import (ImageProfileSerializer, ListProfileSerializer,
-                          UpdateProfileSerializer, UserSerializer)
+                          RoleSerializer, UpdateProfileSerializer,
+                          UserSerializer)
 from .tasks import send_hello_email
 
 User = get_user_model()
@@ -82,3 +84,11 @@ class ProfileAvatarUploadView(CreateModelMixin, APIView):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileRoleAPI(ListAPIView):
+    permission_classes = (AllowAny, )
+    serializer_class = RoleSerializer
+    queryset = Role.objects.all()
+    model = serializer_class.Meta.model
+    throttle_scope = 'profile'
