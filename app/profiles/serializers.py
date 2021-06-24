@@ -1,12 +1,13 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from events.models import EventGroup
+from images.models import Image
+from profiles.models import Role
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
 from rest_framework.serializers import (CharField, EmailField, ModelSerializer,
                                         ValidationError)
 from rest_framework.validators import UniqueValidator
-
-from events.models import Event
-from images.models import Image
 
 Profile = get_user_model()
 
@@ -57,14 +58,29 @@ class UserSerializer(ModelSerializer):
 
 
 class EventProfileSerializer(ModelSerializer):
+    id = serializers.StringRelatedField(source='event.id')
+    event = serializers.StringRelatedField(source='event.name')
+
     class Meta:
-        model = Event.profile.through
-        fields = ('id', )
+        model = EventGroup
+        fields = ('id', 'event', 'status')
+
+
+class RoleSerializer(ModelSerializer):
+
+    class Meta:
+        model = Role
+        fields = ('id', 'role')
 
 
 class ListProfileSerializer(ModelSerializer):
-    profile_event = EventProfileSerializer(read_only=True, many=True)
+    eventsgroups = SerializerMethodField()
     profile_image = ImageFileSerializer(read_only=True, many=True)
+    role = RoleSerializer(read_only=True)
+
+    def get_eventsgroups(self, obj):
+        qset = EventGroup.objects.filter(profile=obj.id)
+        return [EventProfileSerializer(m).data for m in qset]
 
     class Meta:
         model = get_user_model()
@@ -74,7 +90,7 @@ class ListProfileSerializer(ModelSerializer):
             'lastname', 'phone',
             'age', 'work_exp',
             'knowledge', 'role',
-            'profile_image', 'profile_event'
+            'profile_image', 'eventsgroups'
         )
 
 

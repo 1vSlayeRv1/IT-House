@@ -71,3 +71,10 @@ class UploadAvatar(TestCase):
                 {'avatar': file},
                 **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'})
         self.assertEqual(resp.status_code, 201)
+
+    def test_get_profile_role(self):
+
+        resp = self.client.get(
+            '/api/profile/role/',
+            **{'HTTP_AUTHORIZATION': f'Bearer {self.token}'})
+        self.assertEqual(resp.status_code, 200)

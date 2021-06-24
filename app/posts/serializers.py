@@ -1,9 +1,8 @@
+from images.models import Image
+from profiles.models import Profile
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework.serializers import ModelSerializer, StringRelatedField
-
-from images.models import Image
-from profiles.models import Profile
 
 from .models import Comment, Post
 
